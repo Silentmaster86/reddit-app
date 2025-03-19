@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #009fa734;
+    margin: 0;
+    padding: 20px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 120px;
+}
+
+input,
+select {
+    border: 3px solid rgba(0, 0, 0, 0.463);
+    box-shadow: 5px 8px 15px rgba(31, 31, 31, 0.851);
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+input:hover,
+select:hover {
+    border: 2px solid;
+    border-color: #ad0c0c;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: white;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
