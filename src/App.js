@@ -15,7 +15,8 @@ const SignUp = React.lazy(() => import('./features/components/login/SignUp'));
 const SignIn = React.lazy(() => import('./features/components/login/SignIn'));
 const SignOut = React.lazy(() => import('./features/components/login/SignOut'));
 const AuthObserver = React.lazy(() => import('./Authobserver'));
-
+const RedditLogin = React.lazy(() => import('./features/components/reddit/RedditLogin'));
+const OAuthCallback = React.lazy(() => import('./features/components/reddit/OAuthCallback'));
 function App() {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
@@ -51,11 +52,12 @@ function App() {
       <main>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
-            <Route path="/" element={<PostList />} />
+            <Route path="/" element={isAuthenticated ? <PostList /> : <RedditLogin />} />
             <Route path="/post/:postId" element={<PostDetails />} />
             <Route path="/signup" element={!isAuthenticated ? <SignUp /> : <Navigate to="/" />} />
             <Route path="/signin" element={!isAuthenticated ? <SignIn /> : <Navigate to="/" />} />
             <Route path="/profile" element={isAuthenticated ? <UserProfile /> : <Navigate to="/signin" />} />
+            <Route path="/auth/callback" element={<OAuthCallback />} />
           </Routes>
         </Suspense>
       </main>

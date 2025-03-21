@@ -77,7 +77,7 @@ export default function PostDetails() {
               <p>No comments available.</p>
             ) : (
               comments.map((comment) => (
-                <li key={comment.id} className="comment">
+                 <li key={comment.id || comment.name} className="comment">
                   <p><strong>{comment.author}</strong>: {comment.body}</p>
                   <p>↑ {comment.ups}</p>
                 </li>
