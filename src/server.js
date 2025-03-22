@@ -8,7 +8,7 @@ app.use(cors());
 app.use(json());
 app.use(cors({ origin: "*" }));
 
-const CLIENT_ID = process.env.REDDIT_CLIENT_ID;
+const CLIENT_ID = process.env.REACT_APP_REDDIT_CLIENT_ID;
 const CLIENT_SECRET = process.env.REDDIT_CLIENT_SECRET;
 const REDIRECT_URI = "http://localhost:3000/auth/callback";
 
