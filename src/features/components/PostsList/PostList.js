@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts } from "../../posts/postsSlice";
+import { fetchPosts } from "../../posts/postsSlice.js";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./postList.css";

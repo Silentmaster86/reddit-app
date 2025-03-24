@@ -1,35 +1,52 @@
 import React, { useState, useEffect } from 'react';
-import { auth, db } from '../../../firebase';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import "./user.css";
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import './user.css';
 
 const UserProfile = () => {
   const [profile, setProfile] = useState({ username: '', bio: '', avatar: '' });
   const [editMode, setEditMode] = useState(false);
-
-  const userId = auth.currentUser.uid;
+  const user = useSelector((state) => state.auth.user); // Get user from Redux store
+  const accessToken = useSelector((state) => state.auth.accessToken); // Get Reddit access token
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      const profileRef = doc(db, 'users', userId);
-      const profileSnap = await getDoc(profileRef);
-      if (profileSnap.exists()) {
-        setProfile(profileSnap.data());
-      }
-    };
-    fetchProfile();
-  }, [userId]);
+    if (accessToken) {
+      const fetchRedditProfile = async () => {
+        try {
+          const response = await axios.get('https://oauth.reddit.com/api/v1/me', {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+
+          const userData = response.data;
+          setProfile({
+            username: userData.name, // Assuming 'name' is Reddit's username field
+            avatar: userData.icon_img, // Assuming 'icon_img' contains avatar URL
+            bio: userData.subreddit.public_description, // Fetching bio from subreddit description
+          });
+        } catch (error) {
+          console.error("Error fetching Reddit profile:", error);
+        }
+      };
+
+      fetchRedditProfile();
+    }
+  }, [accessToken]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProfile((prevProfile) => ({ ...prevProfile, [name]: value }));
   };
 
-  const handleSave = async () => {
-    const profileRef = doc(db, 'users', userId);
-    await updateDoc(profileRef, profile);
+  const handleSave = () => {
+    // Implement saving profile (e.g., to Firestore or other services)
     setEditMode(false);
   };
+
+  if (!accessToken) {
+    return <p>Please sign in to view and edit your profile.</p>;
+  }
 
   return (
     <div>

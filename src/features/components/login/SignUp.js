@@ -1,7 +1,6 @@
-// src/components/SignUp.js
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth, db } from '../../../firebase';
+import { auth, db } from '../../../firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
 
 const SignUp = () => {

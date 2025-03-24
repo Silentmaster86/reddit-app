@@ -1,34 +1,35 @@
-require("dotenv").config();
-import express, { json } from "express";
+import "dotenv/config";
+import express from "express";
 import cors from "cors";
-import { post } from "axios";
+import axios from "axios";
 
 const app = express();
+app.use(express.json());
 app.use(cors());
-app.use(json());
-app.use(cors({ origin: "*" }));
 
-const CLIENT_ID = process.env.REACT_APP_REDDIT_CLIENT_ID;
+const CLIENT_ID = process.env.REDDIT_CLIENT_ID;
 const CLIENT_SECRET = process.env.REDDIT_CLIENT_SECRET;
-const REDIRECT_URI = "http://localhost:3000/auth/callback";
+const REDIRECT_URI = "http://localhost:3000/auth/callback?code=your_code_here";
 
 app.post("/api/reddit/token", async (req, res) => {
+    console.log("Received request:", req.body); // Add this for debugging
     const { code } = req.body;
 
     if (!code) {
+        console.error("No code provided");
         return res.status(400).json({ error: "Missing authorization code" });
     }
-
+    
+    try {
     const authHeader = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64");
 
-    try {
-        const response = await post(
+        const response = await axios.post(
             "https://www.reddit.com/api/v1/access_token",
             new URLSearchParams({
                 grant_type: "authorization_code",
                 code,
-                redirect_uri: REDIRECT_URI,
-            }),
+                redirect_uri: REDDIT_REDIRECT_URI,
+                 }),
             {
                 headers: {
                     Authorization: `Basic ${authHeader}`,
@@ -36,7 +37,7 @@ app.post("/api/reddit/token", async (req, res) => {
                 },
             }
         );
-
+        console.log("Reddit OAuth Response:", response.data);
         res.json(response.data); // Send the token to the frontend
     } catch (error) {
         console.error("Error fetching access token:", error.response?.data || error.message);

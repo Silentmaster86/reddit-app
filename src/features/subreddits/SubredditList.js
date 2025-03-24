@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedSubreddit, setSubreddits } from "../features/posts/postsSlice";
+import { setSelectedSubreddit, setSubreddits } from "../features/posts/postsSlice.js";
 import axios from "axios";
 import "./subredditList.css";
 

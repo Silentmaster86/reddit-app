@@ -7,6 +7,9 @@ const STATE = "random_string"; // Prevent CSRF attacks
 
 const RedditLogin = () => {
   const handleLogin = () => {
+    const state = Math.random().toString(36).substring(7); // Generate random state
+    sessionStorage.setItem("oauth_state", state); // Store state in session storage
+
     const authUrl = `https://www.reddit.com/api/v1/authorize?client_id=${CLIENT_ID}&response_type=code&state=${STATE}&redirect_uri=${REDIRECT_URI}&duration=permanent&scope=${SCOPE}`;
     window.location.href = authUrl; // Redirect user to Reddit login
   };

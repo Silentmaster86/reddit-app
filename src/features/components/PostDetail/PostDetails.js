@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import CommentsSection from "../Comments/CommentSection";
+import CommentsSection from "../Comments/CommentSection.js";
 import "./postDetails.css";
 
 export default function PostDetails() {

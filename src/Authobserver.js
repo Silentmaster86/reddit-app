@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from './firebase';
-import { setUser, clearUser } from './features/auth/authSlice';
+import { auth } from './firebase.js';
+import { setAuth } from './features/auth/authSlice.js'; // Import setAuth
 
 const AuthObserver = () => {
   const dispatch = useDispatch();
@@ -10,13 +10,22 @@ const AuthObserver = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        dispatch(setUser({
-          uid: user.uid,
-          email: user.email,
-          displayName: user.displayName,
-        }));
+        const userData = {
+          isAuthenticated: true,
+          accessToken: localStorage.getItem("reddit_access_token"),
+          user: {
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName,
+          },
+        };
+        dispatch(setAuth(userData));
       } else {
-        dispatch(clearUser());
+            dispatch(setAuth({
+              isAuthenticated: false,
+              accessToken: null,
+              user: null,
+        }));
       }
     });
 

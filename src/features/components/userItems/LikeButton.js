@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { auth, db } from '../../../firebase';
+import { auth, db } from '../../../firebase.js';
 import { doc, onSnapshot, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 
 const LikeButton = ({ itemId, itemType }) => {

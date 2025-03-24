@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategory } from '../../posts/postsSlice';
+import { setCategory } from '../../posts/postsSlice.js';
 import './categoryFilter.css';
 
 const categories = ['all', 'news', 'sports', 'entertainment', 'technology'];

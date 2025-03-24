@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import LikeButton from '../userItems/LikeButton';
+import LikeButton from '../userItems/LikeButton.js';
 import "./PostCard.css"
 
 const PostCard = React.memo(({ post }) => {

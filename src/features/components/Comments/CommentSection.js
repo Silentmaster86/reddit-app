@@ -1,20 +1,24 @@
-// src/components/CommentsSection.js
 import React, { useState, useEffect } from 'react';
-import { auth, db } from '../../../firebase';
+import { useSelector } from 'react-redux';
+import { auth, db } from '../../../firebase.js';
 import { collection, query, where, onSnapshot, addDoc, serverTimestamp, getDoc, doc, deleteDoc } from 'firebase/firestore';
-import LikeButton from '../userItems/LikeButton';
+import LikeButton from '../userItems/LikeButton.js';
+import { useAuth } from '../../../hooks/useAuth'; // Import the useAuth hook
 
 const CommentsSection = ({ postId }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // State to track loading
+  const [loading, setLoading] = useState(true);
+
+  const user = useAuth(); // Use the useAuth hook to get the current user
+  const redditUser = useSelector((state) => state.auth.user); // Redux user
+  console.log("Reddit User from Redux:", redditUser); // Debugging
 
   useEffect(() => {
-
-    const unsubscribeAuth = auth.onAuthStateChanged((currentUser) => {
-      setUser(currentUser);
-    });
+    if (!user) {
+      console.log("User not authenticated, skipping Firestore query.");
+      return;
+    }
 
     const commentsRef = collection(db, 'comments');
     const q = query(commentsRef, where('postId', '==', postId));
@@ -24,79 +28,95 @@ const CommentsSection = ({ postId }) => {
         const commentsData = await Promise.all(
           snapshot.docs.map(async (documentSnapshot) => {
             const commentData = documentSnapshot.data();
-
-            // Log the authorId to ensure it exists
-            console.log('Author ID:', commentData.authorId);
+            console.log("Fetched Comment Data:", commentData);
 
             const authorRef = doc(db, 'users', commentData.authorId);
             const authorSnap = await getDoc(authorRef);
-      
-            // Ensure authorData is always an object
             const authorData = authorSnap.exists() ? authorSnap.data() : { username: 'Unknown' };
-
             return { id: documentSnapshot.id, ...commentData, author: authorData };
           })
         );
         setComments(commentsData);
       } catch (error) {
+        console.log('Error fetching comments:', error);
         setLoading(false);
       }
     });
 
-    return () => {
-      unsubscribeAuth();
-      unsubscribe();
-    };
-  }, [postId]);
+    return () => unsubscribe();
+  }, [postId, user]);
 
-  
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
 
- const handleCommentSubmit = async (e) => {
-  e.preventDefault();
-  if (!user) {
-    console.log('User is not authenticated');
-    return;
-  }
+    if (!newComment.trim()) {
+      console.log('Comment cannot be empty');
+      return;
+    }
 
-  if (!newComment.trim()) {
-    console.log('Comment cannot be empty');
-    return;
-  }
+    const currentUser = user || redditUser; // Use whichever user is logged in (Firebase or Redux)
+    const userId = currentUser?.uid || currentUser?.id;
 
-  const commentsRef = collection(db, 'comments');
-  await addDoc(commentsRef, {
-    postId,
-    authorId: user.uid,
-    content: newComment,
-    timestamp: serverTimestamp(),
-  });
+    if (!userId) {
+      console.log('User is not authenticated');
+      return;
+    }
 
-  setNewComment('');
-};
+    try {
+      const docRef = await addDoc(collection(db, "comments"), {
+        postId,
+        content: newComment,
+        authorId: userId,
+        timestamp: serverTimestamp(),
+      });
 
-    const handleDeleteComment = async (commentId, authorId) => {
+      console.log("Comment added successfully!");
+
+      setComments((prevComments) => [
+        ...prevComments,
+        {
+          id: docRef.id,
+          content: newComment,
+          authorId: userId,
+          timestamp: { toDate: () => new Date() }, // Simulated timestamp
+          author: { username: currentUser?.displayName || 'Unknown' }, // Use the user's display name
+        },
+      ]);
+
+      setNewComment(''); // Clear the input field after submission
+    } catch (error) {
+      console.error('Error adding comment:', error);
+    }
+  };
+
+  const handleDeleteComment = async (commentId, authorId) => {
     if (!user) {
       console.log('User is not authenticated');
       return;
     }
 
+    // Check if the user is the comment author
     if (user.uid !== authorId) {
       console.log('You can only delete your own comments');
       return;
     }
 
     try {
+      // Perform the Firestore delete operation
       await deleteDoc(doc(db, 'comments', commentId));
       console.log('Comment deleted successfully');
+
+      // Update local state to remove the deleted comment
+      setComments((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
     } catch (error) {
       console.error('Error deleting comment:', error);
     }
   };
-  
+
   const formatTimestamp = (timestamp) => {
     if (!timestamp) return '';
     const date = timestamp.toDate();
-    return date.toLocaleString(); // Customize the format as needed
+    return date.toLocaleString();
   };
 
   return (
@@ -111,6 +131,7 @@ const CommentsSection = ({ postId }) => {
         <button type="submit" disabled={!user}>Comment</button>
         {!user && <p>Please sign in to post a comment.</p>}
       </form>
+
       <div className="comments-list">
         {comments.map((comment) => (
           <div key={comment.id} className="comment">
@@ -118,10 +139,10 @@ const CommentsSection = ({ postId }) => {
             <p>{comment.content}</p>
             <p><em>{formatTimestamp(comment.timestamp)}</em></p>
             <LikeButton itemId={comment.id} itemType="comments" />
-            <span>  </span>
             {user && user.uid === comment.authorId && (
               <button onClick={() => handleDeleteComment(comment.id, comment.authorId)}>
-             🗑️</button>
+                🗑️
+              </button>
             )}
           </div>
         ))}

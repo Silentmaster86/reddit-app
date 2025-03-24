@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchTerm, setSelectedSubreddit, fetchPosts } from "../posts/postsSlice";
+import { setSearchTerm, setSelectedSubreddit, fetchPosts } from "../posts/postsSlice.js";
 import "./searchBar.css"
 
 export default function SearchBar() {
