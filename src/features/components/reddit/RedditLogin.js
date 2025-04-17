@@ -1,7 +1,7 @@
 import React from "react";
 
 const CLIENT_ID = "pneFOr8LBmOoMbSGCobIPg"; // Replace with your Reddit Client ID
-const REDIRECT_URI = "http://localhost:3000/auth/callback"; // Match with Reddit settings
+const REDIRECT_URI = "http://localhost:3005/auth/callback"; // Match with Reddit settings
 const SCOPE = "identity read"; // Scopes define what you can access
 const STATE = "random_string"; // Prevent CSRF attacks
 
