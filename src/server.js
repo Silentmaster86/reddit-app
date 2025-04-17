@@ -9,7 +9,7 @@ app.use(cors());
 
 const CLIENT_ID = process.env.REDDIT_CLIENT_ID;
 const CLIENT_SECRET = process.env.REDDIT_CLIENT_SECRET;
-const REDIRECT_URI = "http://localhost:3000/auth/callback?code=your_code_here";
+const REDIRECT_URI = "http://localhost:3005/auth/callback?code=your_code_here";
 
 app.post("/api/reddit/token", async (req, res) => {
     console.log("Received request:", req.body); // Add this for debugging
