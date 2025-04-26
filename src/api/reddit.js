@@ -8,7 +8,7 @@ const tokenEndpoint =
     : "http://localhost:5000/api/reddit/token";
 
 export const getLoginUrl = () => {
-  const clientId = process.env.REACT_APP_REDDIT_CLIENT_ID;
+  const clientId = pneFOr8LBmOoMbSGCobIPg;
   const redirectUri = https://redit-app.netlify.app/auth/callback;
 
   const state = Math.random().toString(36).substring(7); // random string for security
