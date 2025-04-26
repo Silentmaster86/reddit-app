@@ -9,7 +9,7 @@ const tokenEndpoint =
 
 export const getLoginUrl = () => {
   const clientId = process.env.REACT_APP_REDDIT_CLIENT_ID;
-  const redirectUri = encodeURIComponent(process.env.REACT_APP_REDDIT_REDIRECT_URI || "http://localhost:3000/auth/callback");
+  const redirectUri = https://redit-app.netlify.app/auth/callback;
 
   const state = Math.random().toString(36).substring(7); // random string for security
 
