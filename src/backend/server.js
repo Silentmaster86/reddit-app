@@ -25,11 +25,7 @@ app.post("/api/reddit/token", async (req, res) => {
 
   try {
     const authHeader = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64");
-
-    console.log("Sending Authorization header:", authHeader); // ✅ Correct: inside
-
-    console.log("Using redirect_uri:", REDDIT_REDIRECT_URI);  // ✅ Correct: inside
-
+    
     const response = await axios.post(
       "https://www.reddit.com/api/v1/access_token",
       new URLSearchParams({
