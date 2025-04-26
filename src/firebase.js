@@ -1,20 +1,22 @@
 // src/firebase.js
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
+// ✅ Move these values to .env.local or .env file for security
 const firebaseConfig = {
-  apiKey: "AIzaSyBJ91omrB4P1IUkNvrO0YoJMLSO4iAjido",
-  authDomain: "redditapp-2025.firebaseapp.com",
-  projectId: "redditapp-2025",
-  storageBucket: "redditapp-2025.firebasestorage.app",
-  messagingSenderId: "789827274878",
-  appId: "1:789827274878:web:659dbc37101f5305cfb02f",
-  measurementId: "G-W96J8MYG7F"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+// Initialize Firebase app once
+const firebaseApp = initializeApp(firebaseConfig);
 
-export { auth, db };
+// Export auth and db instances
+export const auth = getAuth(firebaseApp);
+export const db = getFirestore(firebaseApp);

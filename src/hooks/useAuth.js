@@ -1,6 +1,6 @@
 // src/hooks/useAuth.js
 import { useState, useEffect } from 'react';
-import { auth } from '../firebase'; // Import Firebase auth service
+import { auth } from '../firebase.js'; // Import Firebase auth service
 import { onAuthStateChanged } from 'firebase/auth'; // Firebase method to listen for auth state changes
 
 export const useAuth = () => {

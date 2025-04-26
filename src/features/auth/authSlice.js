@@ -1,40 +1,51 @@
-import { createSlice } from '@reduxjs/toolkit';
+// src/features/auth/authSlice.js
+import { createSlice } from "@reduxjs/toolkit";
 
-const storedToken = localStorage.getItem("reddit_access_token");
-
+// Initial state
 const initialState = {
-  isAuthenticated: storedToken ? true : false, // Check if token exists
+  isAuthenticated: false,
   user: null,
-  accessToken: storedToken,
-  status: 'idle',
-  error: null
+  provider: null, // 'firebase' | 'reddit' | null
 };
 
+// Auth Slice
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
-    setAuth: (state, action) => {
-      state.isAuthenticated = action.payload.isAuthenticated;
-      state.accessToken = action.payload.accessToken;
-      localStorage.setItem("reddit_access_token", action.payload.accessToken);
-
-      // Store only serializable data from the user object
-      state.user = action.payload.user
-        ? {
-        uid: action.payload.user.uid, // Storing only UID
-        email: action.payload.user.email, // Storing email (if needed)
-        displayName: action.payload.user.displayName, // Storing displayName (if needed)
-      } : null
+    // For Firebase login
+    loginFirebase(state, action) {
+      state.isAuthenticated = true;
+      state.provider = "firebase";
+      state.user = {
+        id: action.payload.uid,
+        email: action.payload.email,
+        name: action.payload.displayName,
+        avatar: action.payload.photoURL,
+      };
     },
-    clearUser: (state) => {
-      state.user = null;
+    // For Reddit OAuth login
+    loginReddit(state, action) {
+      state.isAuthenticated = true;
+      state.provider = "reddit";
+      state.user = {
+        id: action.payload.id,
+        name: action.payload.name,
+        avatar: action.payload.avatar,
+        accessToken: action.payload.accessToken,
+      };
+    },
+    // Logout
+    logout(state) {
       state.isAuthenticated = false;
-      state.accessToken = null;
-      localStorage.removeItem("reddit_access_token"); // Remove token on logout
-    }
+      state.user = null;
+      state.provider = null;
+    },
   },
 });
 
-export const { setAuth, clearUser } = authSlice.actions;
+// Export actions
+export const { loginFirebase, loginReddit, logout } = authSlice.actions;
+
+// Export reducer
 export default authSlice.reducer;

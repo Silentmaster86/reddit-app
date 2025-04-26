@@ -2,6 +2,7 @@
   "name": "reddit-app",
   "proxy": "https://www.reddit.com",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^2.6.1",
@@ -12,9 +13,11 @@
     "express": "^4.21.2",
     "firebase": "^11.4.0",
     "framer-motion": "^12.5.0",
+    "lucide-react": "^0.503.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.3.0",
-    "redux": "^5.0.1"
+    "redux": "^5.0.1",
+    "styled-components": "^6.1.17"
   },
   "scripts": {
     "start": "react-scripts start",

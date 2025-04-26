@@ -1,10 +1,20 @@
-import { configureStore } from "@reduxjs/toolkit";
+// src/app/store.js
+import { configureStore } from '@reduxjs/toolkit';
+import authReducer from '../features/auth/authSlice.js';
 import postsReducer from '../features/posts/postsSlice.js';
-import authReducer from '../features/auth/authSlice.js'; 
+import usersReducer from '../features/users/userSlice.js';
+// Add other slices here as needed
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
-    posts: postsReducer,
     auth: authReducer,
+    posts: postsReducer,
+    users: usersReducer,
+    // search: searchReducer (optional if you have one),
   },
+  // middleware: (getDefaultMiddleware) =>
+  //   getDefaultMiddleware().concat(yourCustomMiddleware),
+  devTools: process.env.NODE_ENV !== 'production',
 });
+
+export default store;
