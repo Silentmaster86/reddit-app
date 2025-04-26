@@ -4,7 +4,7 @@ const redditAPIBase = "https://oauth.reddit.com";
 
 const tokenEndpoint =
   process.env.NODE_ENV === "production"
-    ? "https://redit-app.netlify.app/api/reddit/token" // <-- replace with deployed backend URL
+    ? "https://reddit-app-clone-yo98.onrender.com" // <-- replace with deployed backend URL
     : "http://localhost:5000/api/reddit/token";
 
 export const getLoginUrl = () => {
