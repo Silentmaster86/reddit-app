@@ -2,10 +2,11 @@
 
 const redditAPIBase = "https://oauth.reddit.com";
 
-const tokenEndpoint =
+const tokenEndpoint = 
   process.env.NODE_ENV === "production"
-    ? "https://reddit-app-clone-yo98.onrender.com" // <-- replace with deployed backend URL
+    ? "https://redditclone-backend.onrender.com/api/reddit/token"
     : "http://localhost:5000/api/reddit/token";
+
 
 export const getLoginUrl = () => {
   const clientId = pneFOr8LBmOoMbSGCobIPg;
