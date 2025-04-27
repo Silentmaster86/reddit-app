@@ -1,9 +1,15 @@
 // src/api/auth.js
 
+// Set the correct backend URL depending on environment
+const API_BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://redditclone-backend.onrender.com" // ✅ your Render backend
+    : "http://localhost:5000"; // ✅ local dev backend
+
 const authAPI = {
   async signInWithEmail(email, password) {
     try {
-      const response = await fetch("http://localhost:5000/api/auth/signin", {
+      const response = await fetch(`${API_BASE_URL}/api/auth/signin`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -21,7 +27,7 @@ const authAPI = {
 
   async signUpWithEmail(email, password) {
     try {
-      const response = await fetch("http://localhost:5000/api/auth/signup", {
+      const response = await fetch(`${API_BASE_URL}/api/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -39,7 +45,7 @@ const authAPI = {
 
   async signOut() {
     try {
-      const response = await fetch("http://localhost:5000/api/auth/signout", {
+      const response = await fetch(`${API_BASE_URL}/api/auth/signout`, {
         method: "POST",
         credentials: "include",
       });
