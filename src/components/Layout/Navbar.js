@@ -11,7 +11,7 @@ const Nav = styled.nav`
   justify-content: space-between;
   align-items: center;
   position: sticky;
-  top: 10;
+  top: 0;
   z-index: 100;
 `;
 
