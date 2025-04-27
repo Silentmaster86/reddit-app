@@ -43,26 +43,24 @@ export default function PostList() {
           : "No posts found for this subreddit"}
       </h1>
 
-      <motion.ul className="post-list">
-        {filteredPosts.length === 0 ? (
-          <p>No posts found.</p>
-        ) : (
-          currentPosts.map((post, index) => (
-            <Link to={`/post/${post.id}`} key={post.id} className="post-link">
-              <motion.li
-                className="post-item"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-              >
-                <h2>{post.title}</h2>
-                <p>Posted by: {post.author}</p>
-                <p>Score: {post.score}</p>
-              </motion.li>
-            </Link>
-          ))
-        )}
-      </motion.ul>
+<motion.ul className="post-list">
+  {filteredPosts.length === 0 ? (
+    <p>No posts found.</p>
+  ) : (
+    currentPosts.map((post, index) => (
+      <Link to={`/post/${post.id}`} key={post.id} className="post-link">
+        <motion.li
+          className="post-item"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: index * 0.1 }}
+        >
+          <PostCard post={post} />
+        </motion.li>
+      </Link>
+    ))
+  )}
+</motion.ul>
 
       {filteredPosts.length > postsPerPage && (
         <Pagination
