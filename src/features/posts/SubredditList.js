@@ -1,5 +1,3 @@
-// src/features/posts/SubredditList.js
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedSubreddit, setSubreddits } from "./postsSlice.js";
@@ -39,6 +37,10 @@ const SearchInput = styled.input`
 const List = styled.ul`
   list-style: none;
   padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 `;
 
 const ListItem = styled.li`
@@ -91,6 +93,7 @@ const SubredditList = () => {
   const selectedSubreddit = useSelector((state) => state.posts.selectedSubreddit);
   const subreddits = useSelector((state) => state.posts.subreddits);
   const [searchTerm, setSearchTerm] = useState("");
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchSubreddits = async () => {
@@ -100,6 +103,7 @@ const SubredditList = () => {
         dispatch(setSubreddits(subredditData));
       } catch (error) {
         console.error("❌ Failed to load subreddits:", error);
+        setError("Failed to load subreddits. Try again later.");
       }
     };
 
@@ -110,7 +114,9 @@ const SubredditList = () => {
     dispatch(setSelectedSubreddit(sub.display_name));
   };
 
-  const filteredSubreddits = subreddits.filter((sub) =>
+  const combinedSubreddits = [...staticSubreddits, ...subreddits];
+
+  const filteredSubreddits = combinedSubreddits.filter((sub) =>
     sub.display_name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -123,41 +129,31 @@ const SubredditList = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      {subreddits.length === 0 ? (
+      
+      {error && <p style={{ color: "red", marginBottom: "1rem" }}>{error}</p>}
+      
+      {subreddits.length === 0 && !error ? (
         <Spinner />
       ) : (
         <List>
-          {/* Static subreddits like r/all and r/popular */}
-          {staticSubreddits.map((sub) => (
-            <ListItem
-              key={sub.id}
-              onClick={() => handleClick(sub)}
-              $active={selectedSubreddit === sub.display_name}
-            >
-              <Icon
-                src={sub.icon_img || fallbackIcon}
-                onError={(e) => (e.target.src = fallbackIcon)}
-                alt={sub.display_name}
-              />
-              <SubredditName>{sub.display_name_prefixed}</SubredditName>
-            </ListItem>
-          ))}
-
-          {/* Dynamically loaded and filtered subreddits */}
-          {filteredSubreddits.map((sub) => (
-            <ListItem
-              key={sub.id}
-              onClick={() => handleClick(sub)}
-              $active={selectedSubreddit === sub.display_name}
-            >
-              <Icon
-                src={sub.icon_img || sub.community_icon || fallbackIcon}
-                onError={(e) => (e.target.src = fallbackIcon)}
-                alt={sub.display_name}
-              />
-              <SubredditName>{sub.display_name_prefixed}</SubredditName>
-            </ListItem>
-          ))}
+          {filteredSubreddits.length > 0 ? (
+            filteredSubreddits.map((sub) => (
+              <ListItem
+                key={sub.id}
+                onClick={() => handleClick(sub)}
+                $active={selectedSubreddit === sub.display_name}
+              >
+                <Icon
+                  src={sub.icon_img || sub.community_icon || fallbackIcon}
+                  onError={(e) => (e.target.src = fallbackIcon)}
+                  alt={sub.display_name}
+                />
+                <SubredditName>{sub.display_name_prefixed}</SubredditName>
+              </ListItem>
+            ))
+          ) : (
+            <p>No subreddits found.</p>
+          )}
         </List>
       )}
     </Wrapper>
