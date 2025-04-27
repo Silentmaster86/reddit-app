@@ -4,7 +4,7 @@ const redditAPIBase = "https://oauth.reddit.com";
 
 const tokenEndpoint = 
   process.env.NODE_ENV === "production"
-    ? "https://redditclone-backend.onrender.com/api/reddit/token"
+    ? "https://redditclone-backend.onrender.com/api/reddit/token";
     : "http://localhost:5000/api/reddit/token";
 
 
