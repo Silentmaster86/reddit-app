@@ -4,8 +4,19 @@ import cors from "cors";
 import axios from "axios";
 
 const app = express();
+
+// 🚀 Allow only Netlify and localhost
+const allowedOrigins = [
+  "https://redditclone-app.netlify.app", //  Netlify frontend
+  "http://localhost:3000"                 // local frontend
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true, // if needed (e.g., cookies)
+}));
+
 app.use(express.json());
-app.use(cors());
 
 const CLIENT_ID = process.env.REDDIT_CLIENT_ID;
 const CLIENT_SECRET = process.env.REDDIT_CLIENT_SECRET;
