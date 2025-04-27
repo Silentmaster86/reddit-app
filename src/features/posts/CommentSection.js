@@ -1,4 +1,5 @@
 // src/features/posts/CommentSection.js
+
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { auth, db } from "../../firebase.js";
@@ -15,7 +16,7 @@ const Wrapper = styled.div`
 const CommentForm = styled.form`
   display: flex;
   flex-direction: column;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 `;
 
 const Textarea = styled.textarea`
@@ -37,6 +38,7 @@ const SubmitButton = styled.button`
   border-radius: 6px;
   cursor: pointer;
   align-self: flex-start;
+  transition: background 0.2s;
 
   &:hover {
     background: #1484d6;
@@ -44,7 +46,7 @@ const SubmitButton = styled.button`
 `;
 
 const CommentList = styled.div`
-  margin-top: 1rem;
+  margin-top: 2rem;
 `;
 
 const SingleComment = styled(motion.div)`
@@ -62,6 +64,7 @@ const CommentAuthor = styled.div`
 
 const CommentContent = styled.div`
   margin: 0.5rem 0;
+  color: #d7dadc;
 `;
 
 const CommentTime = styled.div`
@@ -90,9 +93,12 @@ const CommentSection = ({ postId }) => {
   useEffect(() => {
     if (!postId) return;
 
-    const q = query(collection(db, "comments"), where("postId", "==", postId));
+    const commentsQuery = query(
+      collection(db, "comments"),
+      where("postId", "==", postId)
+    );
 
-    const unsubscribe = onSnapshot(q, async (snapshot) => {
+    const unsubscribe = onSnapshot(commentsQuery, async (snapshot) => {
       const fetchedComments = await Promise.all(
         snapshot.docs.map(async (docSnap) => {
           const commentData = docSnap.data();
@@ -134,7 +140,10 @@ const CommentSection = ({ postId }) => {
   };
 
   const handleDelete = async (commentId, authorId) => {
-    if (!user || user.uid !== authorId) return;
+    const currentUser = user || redditUser;
+    const userId = currentUser?.uid || currentUser?.id;
+
+    if (userId !== authorId) return;
 
     try {
       await deleteDoc(doc(db, "comments", commentId));
@@ -174,7 +183,7 @@ const CommentSection = ({ postId }) => {
               layout
               onAnimationComplete={() => {
                 if (comment.id === justPostedId) {
-                  setTimeout(() => setJustPostedId(null), 1000); // Remove highlight after 1 sec
+                  setTimeout(() => setJustPostedId(null), 1000); // Remove highlight
                 }
               }}
             >
@@ -183,7 +192,12 @@ const CommentSection = ({ postId }) => {
               <CommentTime>{formatTimestamp(comment.timestamp)}</CommentTime>
               <LikeButton itemId={comment.id} itemType="comments" />
               {user && user.uid === comment.authorId && (
-                <SubmitButton onClick={() => handleDelete(comment.id, comment.authorId)}>Delete</SubmitButton>
+                <SubmitButton
+                  type="button"
+                  onClick={() => handleDelete(comment.id, comment.authorId)}
+                >
+                  Delete
+                </SubmitButton>
               )}
             </SingleComment>
           ))}
