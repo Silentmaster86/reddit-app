@@ -10,7 +10,7 @@ const tokenEndpoint =
 
 export const getLoginUrl = () => {
   const clientId = pneFOr8LBmOoMbSGCobIPg;
-  const redirectUri = "https://reddit-app-clone-yo98.onrender.com";
+  const redirectUri = "https://redditclone-app.netlify.app/auth/callback";
 
   const state = Math.random().toString(36).substring(7); // random string for security
 
