@@ -4,13 +4,13 @@ const redditAPIBase = "https://oauth.reddit.com";
 
 const tokenEndpoint = 
   process.env.NODE_ENV === "production"
-    ? "https://redditclone-backend.onrender.com/api/reddit/token";
+    ? "https://redditclone-backend.onrender.com/api/reddit/token"
     : "http://localhost:5000/api/reddit/token";
 
 
 export const getLoginUrl = () => {
   const clientId = pneFOr8LBmOoMbSGCobIPg;
-  const redirectUri = https://reddit-app-clone-yo98.onrender.com;
+  const redirectUri = "https://reddit-app-clone-yo98.onrender.com";
 
   const state = Math.random().toString(36).substring(7); // random string for security
 
