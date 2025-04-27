@@ -22,15 +22,28 @@ const Logo = styled(Link)`
   text-decoration: none;
 `;
 
+const SearchInput = styled.input`
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 9999px;
+  outline: none;
+  width: 250px;
+
+  &:focus {
+    border-color: #ff4500;
+  }
+`;
+
 const NavLinks = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
 `;
 
 const NavLink = styled(Link)`
   text-decoration: none;
   color: #333;
   font-weight: 700;
+  transition: color 0.3s ease;
 
   &:hover {
     color: #ff4500;
@@ -43,6 +56,7 @@ const Navbar = () => {
   return (
     <Nav>
       <Logo to="/">RedditClone</Logo>
+      <SearchInput type="text" placeholder="Search..." />
       <NavLinks>
         <NavLink to="/">Home</NavLink>
         {isAuthenticated ? (
