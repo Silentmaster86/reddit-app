@@ -11,7 +11,7 @@ const CLIENT_ID = process.env.REDDIT_CLIENT_ID;
 const CLIENT_SECRET = process.env.REDDIT_CLIENT_SECRET;
 const REDDIT_REDIRECT_URI =
   process.env.NODE_ENV === "production"
-    ? "https://reddit-app-clone-yo98.onrender.com/api/reddit/token"
+    ? "https://redditclone-app.netlify.app/auth/callback"
     : "http://localhost:3000/auth/callback";
 
 app.post("/api/reddit/token", async (req, res) => {
