@@ -7,7 +7,7 @@ import Spinner from "../../components/UI/Spinner.js";
 
 const Wrapper = styled.div`
   padding: 1rem;
-  background-color: #1a1a1b;
+  background-color: #404040;
   color: #fff;
   border-radius: 8px;
 `;
