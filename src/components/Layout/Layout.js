@@ -14,7 +14,9 @@ const LayoutWrapper = styled.div`
 const ContentArea = styled.div`
   display: flex;
   flex: 1;
-  background-color: ${({ theme }) => theme.body || "#1a1a1b"};
+    background-color:rgb(255, 255, 255);
+  color: #fff;
+  border-radius: 8px;
 `;
 
 const MainContent = styled.main`
@@ -23,6 +25,7 @@ const MainContent = styled.main`
   background-color: ${({ theme }) => theme.body || "#1a1a1b"};
   color: ${({ theme }) => theme.text || "#d7dadc"};
   min-height: calc(100vh - 60px - 50px);
+  border-radius: 8px;
 `;
 
 const Layout = ({ children }) => {
