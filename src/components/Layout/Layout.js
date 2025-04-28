@@ -8,6 +8,7 @@ const LayoutWrapper = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  width: 120rem;
 `;
 
 const ContentArea = styled.div`
