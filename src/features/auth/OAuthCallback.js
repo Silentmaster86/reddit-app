@@ -42,11 +42,11 @@ const OAuthCallback = () => {
 
         // Step 4: Dispatch to Redux
         dispatch(loginReddit({
-  id: userInfo.id,
-  name: userInfo.name,
-  avatar: userInfo.icon_img,
-  accessToken,
-}));
+          id: userInfo.id,
+          name: userInfo.name,
+          avatar: userInfo.icon_img,
+          accessToken,
+        }));
 
 
         // Step 5: Navigate to home
