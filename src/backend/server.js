@@ -1,3 +1,4 @@
+// server.js
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
@@ -5,22 +6,25 @@ import axios from "axios";
 
 const app = express();
 
-// 🚀 Allow only Netlify and localhost
+// ✅ Update these to match your frontend URLs
 const allowedOrigins = [
-  "https://redditclone-app.netlify.app", //  Netlify frontend
-  "http://localhost:3000"                 // local frontend
+  "https://redditclone-app.netlify.app",
+  "http://localhost:3000"
 ];
 
+// ✅ CORS middleware that handles browser preflight correctly
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error("Not allowed by CORS"));
+      callback(new Error("CORS blocked for origin: " + origin));
     }
   },
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
 }));
-
 
 app.use(express.json());
 
@@ -32,24 +36,24 @@ const REDDIT_REDIRECT_URI =
     : "http://localhost:3000/auth/callback";
 
 app.post("/api/reddit/token", async (req, res) => {
-  console.log("Received request:", req.body);
-
   const { code } = req.body;
+
   if (!code) {
-    console.error("No code provided");
     return res.status(400).json({ error: "Missing authorization code" });
   }
 
   try {
     const authHeader = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64");
-    
+
+    const params = new URLSearchParams({
+      grant_type: "authorization_code",
+      code,
+      redirect_uri: REDDIT_REDIRECT_URI,
+    });
+
     const response = await axios.post(
       "https://www.reddit.com/api/v1/access_token",
-      new URLSearchParams({
-        grant_type: "authorization_code",
-        code,
-        redirect_uri: REDDIT_REDIRECT_URI,
-      }),
+      params.toString(),
       {
         headers: {
           Authorization: `Basic ${authHeader}`,
@@ -58,13 +62,12 @@ app.post("/api/reddit/token", async (req, res) => {
       }
     );
 
-    console.log("Reddit OAuth Response:", response.data);
     res.json(response.data);
   } catch (error) {
-    console.error("Error fetching access token:", error.response?.data || error.message);
+    console.error("❌ Reddit OAuth Error:", error.response?.data || error.message);
     res.status(500).json({ error: "Failed to get access token" });
   }
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
