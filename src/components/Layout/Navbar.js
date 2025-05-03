@@ -1,7 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+// src/components/Layout/Navbar.js
+import React from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 const Nav = styled.nav`
   background: #ffffff;
@@ -24,7 +25,8 @@ const Logo = styled(Link)`
 
 const NavLinks = styled.div`
   display: flex;
-  gap: 2rem;
+  align-items: center;
+  gap: 1.5rem;
 `;
 
 const NavLink = styled(Link)`
@@ -38,18 +40,39 @@ const NavLink = styled(Link)`
   }
 `;
 
+const Avatar = styled.img`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+`;
+
+const UserInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
 const Navbar = () => {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const { isAuthenticated, user, provider } = useSelector((state) => state.auth);
 
   return (
     <Nav>
       <Logo to="/">RedditClone</Logo>
       <NavLinks>
         <NavLink to="/">Home</NavLink>
+
         {isAuthenticated ? (
           <>
             <NavLink to="/profile">Profile</NavLink>
             <NavLink to="/signout">Logout</NavLink>
+
+            {provider === "reddit" && user?.avatar && (
+              <UserInfo>
+                <Avatar src={user.avatar} alt="avatar" />
+                <span>{user.name}</span>
+              </UserInfo>
+            )}
           </>
         ) : (
           <>
