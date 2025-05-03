@@ -18,12 +18,13 @@ const Wrapper = styled.div`
 `;
 
 const Form = styled.form`
-  background: #1a1a1b;
+  background: #fff;
   padding: 2rem;
-  border-radius: 8px;
-  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   width: 100%;
   max-width: 400px;
+  margin: auto;
 `;
 
 const Input = styled.input`
@@ -35,6 +36,21 @@ const Input = styled.input`
   background: #272729;
   color: #fff;
   font-size: 1rem;
+`;
+
+const TogglePassword = styled.button`
+  background: none;
+  border: none;
+  color: #0079d3;
+  cursor: pointer;
+  margin-top: -0.75rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  align-self: flex-end;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const Button = styled.button`
@@ -70,6 +86,7 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // ✅ moved inside component
 
   // 🔹 Handle Firebase Email Sign In
   const handleEmailSignIn = async (e) => {
@@ -89,13 +106,14 @@ const SignIn = () => {
 
   // 🔹 Handle Reddit OAuth Sign In
   const handleRedditSignIn = () => {
-    window.location.href = getLoginUrl(); // 🔥 Fixed
+    window.location.href = getLoginUrl();
   };
 
   return (
     <Wrapper>
       <Form onSubmit={handleEmailSignIn}>
         <Heading>Sign In with Email</Heading>
+
         <Input
           type="email"
           placeholder="Email Address"
@@ -103,13 +121,22 @@ const SignIn = () => {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+
         <Input
-          type="password"
+          type={showPassword ? "text" : "password"}
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+
+        <TogglePassword
+          type="button"
+          onClick={() => setShowPassword((prev) => !prev)}
+        >
+          {showPassword ? "Hide Password" : "Show Password"}
+        </TogglePassword>
+
         <Button type="submit">Sign In</Button>
       </Form>
 
