@@ -2,8 +2,8 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { exchangeCodeForToken, getUserInfo } from "../../api/reddit";
-import { loginReddit } from "./authSlice";
+import { exchangeCodeForToken, getUserInfo } from "../../api/reddit.js";
+import { loginReddit } from "./authSlice.js";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
