@@ -41,7 +41,13 @@ const OAuthCallback = () => {
         localStorage.setItem("reddit_access_token", accessToken);
 
         // Step 4: Dispatch to Redux
-        dispatch(loginReddit({ accessToken, user: userInfo }));
+        dispatch(loginReddit({
+  id: userInfo.id,
+  name: userInfo.name,
+  avatar: userInfo.icon_img,
+  accessToken,
+}));
+
 
         // Step 5: Navigate to home
         navigate("/");
