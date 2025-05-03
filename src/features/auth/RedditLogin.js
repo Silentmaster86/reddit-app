@@ -2,7 +2,8 @@ import React from "react";
 
 const RedditLogin = () => {
   const clientId = "pneFOr8LBmOoMbSGCobIPg";
-  const redirectUri = " http://localhost:3000/auth/callback";
+  const redirectUri = "https://redditclone-app.netlify.app/auth/callback";
+
   const scope = "identity read submit";
   const responseType = "code";
 
