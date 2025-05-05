@@ -47,7 +47,7 @@ const OAuthCallback = () => {
           user: {
             id: userInfo.id,
             name: userInfo.name,
-            icon_img: userInfo.icon_img,
+            avatar: userInfo.icon_img,
           }
         }));
 
