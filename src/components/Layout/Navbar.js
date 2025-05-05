@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import SignOut from "../../features/auth/SignOut";
+import SignOut from "../../features/auth/SignOut.js";
 
 const Nav = styled.nav`
   background: #ffffff;
