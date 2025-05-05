@@ -1,4 +1,3 @@
-// src/pages/ProfilePage.js
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
@@ -22,8 +21,16 @@ const Card = styled.div`
   text-align: center;
 `;
 
+const Avatar = styled.img`
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+`;
+
 const ProfilePage = () => {
   const user = useSelector((state) => state.auth.user);
+  const provider = useSelector((state) => state.auth.provider);
 
   return (
     <Wrapper>
@@ -31,8 +38,10 @@ const ProfilePage = () => {
         <h2>User Profile</h2>
         {user ? (
           <>
-            <p><strong>Name:</strong> {user.displayName || "N/A"}</p>
-            <p><strong>UID:</strong> {user.uid}</p>
+            {user.avatar && <Avatar src={user.avatar} alt="User Avatar" />}
+            <p><strong>Name:</strong> {user.name || user.email || "N/A"}</p>
+            <p><strong>ID:</strong> {user.id || user.uid || "N/A"}</p>
+            <p><strong>Provider:</strong> {provider}</p>
           </>
         ) : (
           <p>No user data available.</p>
