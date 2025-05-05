@@ -40,6 +40,7 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.user = null;
       state.provider = null;
+      localStorage.removeItem("reddit_access_token");
     },
   },
 });
