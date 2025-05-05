@@ -1,32 +1,46 @@
 // src/features/auth/SignOut.js
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase.js";
-import { clearAuth } from "./authSlice.js";
+import { logout } from "./authSlice.js";
+import { useNavigate } from "react-router-dom";
 
 const SignOut = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const provider = useSelector((state) => state.auth.provider); // reddit | firebase
 
   const handleSignOut = async () => {
     try {
-      await signOut(auth);
-      dispatch(clearAuth());
+      if (provider === "firebase") {
+        await signOut(auth); // Sign out Firebase user
+      }
+
+      if (provider === "reddit") {
+        localStorage.removeItem("reddit_access_token"); // Remove Reddit token
+      }
+
+      dispatch(logout()); // Reset Redux state
+      navigate("/signin"); // Redirect
     } catch (error) {
       console.error("Error signing out:", error);
     }
   };
 
   return (
-    <button onClick={handleSignOut} style={{
-      background: '#ff4500',
-      color: 'white',
-      padding: '0.6rem 1rem',
-      border: 'none',
-      borderRadius: '4px',
-      fontWeight: 'bold',
-      cursor: 'pointer'
-    }}>
+    <button
+      onClick={handleSignOut}
+      style={{
+        background: "#ff4500",
+        color: "white",
+        padding: "0.6rem 1rem",
+        border: "none",
+        borderRadius: "4px",
+        fontWeight: "bold",
+        cursor: "pointer",
+      }}
+    >
       Sign Out
     </button>
   );
