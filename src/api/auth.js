@@ -3,7 +3,7 @@
 // Set the correct backend URL depending on environment
 const API_BASE_URL =
   process.env.NODE_ENV === "production"
-    ? "https://redditclone-backend.onrender.com" // ✅ your Render backend
+    ? "https://reddit-app-2q4v.onrender.com" // ✅ your Render backend
     : "http://localhost:5000"; // ✅ local dev backend
 
 const authAPI = {
