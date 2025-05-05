@@ -26,13 +26,14 @@ const authSlice = createSlice({
     },
     // For Reddit OAuth login
     loginReddit(state, action) {
+      const { accessToken, user } = action.payload;
       state.isAuthenticated = true;
       state.provider = "reddit";
       state.user = {
-        id: action.payload.id,
-        name: action.payload.name,
-        avatar: action.payload.avatar,
-        accessToken: action.payload.accessToken,
+        id: user.id,
+        name: user.name,
+        avatar: user.icon_img || null, // 👈 avatar from Reddit
+        accessToken,
       };
     },
     // Logout
