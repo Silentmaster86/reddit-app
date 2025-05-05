@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import SignOut from "../../features/auth/SignOut";
 
 const Nav = styled.nav`
   background: #ffffff;
@@ -62,24 +63,25 @@ const Navbar = () => {
       <NavLinks>
         <NavLink to="/">Home</NavLink>
 
-        {isAuthenticated ? (
-          <>
-            <NavLink to="/profile">Profile</NavLink>
-            <NavLink to="/signout">Logout</NavLink>
+{isAuthenticated ? (
+  <>
+    <NavLink to="/profile">Profile</NavLink>
 
-            {provider === "reddit" && user?.avatar && (
-              <UserInfo>
-                <Avatar src={user.icon_img} alt="avatar" />
-                <span>{user.name}</span>
-              </UserInfo>
-            )}
-          </>
-        ) : (
-          <>
-            <NavLink to="/signin">Sign In</NavLink>
-            <NavLink to="/signup">Sign Up</NavLink>
-          </>
-        )}
+    <SignOut /> {/* ✅ use the real logout button here */}
+
+    {provider === "reddit" && user?.avatar && (
+      <UserInfo>
+        <Avatar src={user.avatar} alt="avatar" />
+        <span>{user.name}</span>
+      </UserInfo>
+    )}
+  </>
+) : (
+  <>
+    <NavLink to="/signin">Sign In</NavLink>
+    <NavLink to="/signup">Sign Up</NavLink>
+  </>
+)}
       </NavLinks>
     </Nav>
   );
