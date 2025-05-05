@@ -42,14 +42,15 @@ const OAuthCallback = () => {
         localStorage.setItem("reddit_access_token", accessToken);
 
         // Step 4: Dispatch to Redux
-        dispatch(
-          loginReddit({
+        dispatch(loginReddit({
+          accessToken,
+          user: {
             id: userInfo.id,
             name: userInfo.name,
-            avatar: userInfo.icon_img,
-            accessToken,
-          })
-        );
+            icon_img: userInfo.icon_img,
+          }
+        }));
+
 
         navigate("/");
       } catch (error) {
