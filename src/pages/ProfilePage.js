@@ -38,7 +38,7 @@ const ProfilePage = () => {
         <h2>User Profile</h2>
         {user ? (
           <>
-            {user.avatar && <Avatar src={user.avatar} alt="User Avatar" />}
+            {user.avatar && <Avatar src={user.icon_img} alt="User Avatar" />}
             <p><strong>Name:</strong> {user.name || user.email || "N/A"}</p>
             <p><strong>ID:</strong> {user.id || user.uid || "N/A"}</p>
             <p><strong>Provider:</strong> {provider}</p>
