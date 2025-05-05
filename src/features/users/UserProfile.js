@@ -31,6 +31,7 @@ const UserProfile = () => {
       <h2>User Profile</h2>
       {user ? (
         <>
+          <p>Useravatar: {user.avatar}</p>
           <p><strong>Username:</strong> {user.displayName}</p>
           <p><strong>UID:</strong> {user.uid}</p>
         </>
