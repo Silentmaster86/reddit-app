@@ -69,7 +69,7 @@ const Navbar = () => {
 
             {provider === "reddit" && user?.avatar && (
               <UserInfo>
-                <Avatar src={user.avatar} alt="avatar" />
+                <Avatar src={user.icon_img} alt="avatar" />
                 <span>{user.name}</span>
               </UserInfo>
             )}
