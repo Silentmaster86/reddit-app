@@ -10,9 +10,21 @@ export const fetchPosts = createAsyncThunk(
     const response = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
     const json = await response.json();
 
-    return json.data.children.map((post) => post.data);
+    return json.data.children.map(({ data }) => ({
+      id: data.id,
+      title: data.title,
+      author: data.author,
+      subreddit: data.subreddit,
+      permalink: data.permalink,
+      thumbnail: data.thumbnail,
+      url: data.url,
+      ups: data.ups,
+      num_comments: data.num_comments,
+      created_utc: data.created_utc
+    }));
   }
 );
+
 
 const postsSlice = createSlice({
   name: 'posts',
