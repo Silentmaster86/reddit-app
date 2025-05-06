@@ -1,22 +1,28 @@
 // src/components/Layout/Layout.js
 import React from "react";
 import styled from "styled-components";
-import Sidebar from "./Sidebar.js";
-import Footer from "./Footer.js";
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
+import Footer from "./Footer";
+import SoundBar from "./SoundBar";
 
 const LayoutWrapper = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  width: 120rem;
 `;
 
 const ContentArea = styled.div`
   display: flex;
   flex: 1;
-    background-color:rgb(255, 255, 255);
-  color: #fff;
-  border-radius: 8px;
+  background-color: ${({ theme }) => theme.body || "#1a1a1b"};
+`;
+
+const SidebarWrapper = styled.aside`
+  width: 280px;
+  background-color: #272729;
+  padding: 1rem;
+  border-right: 1px solid #343536;
 `;
 
 const MainContent = styled.main`
@@ -24,15 +30,17 @@ const MainContent = styled.main`
   padding: 2rem;
   background-color: ${({ theme }) => theme.body || "#1a1a1b"};
   color: ${({ theme }) => theme.text || "#d7dadc"};
-  min-height: calc(100vh - 60px - 50px);
-  border-radius: 8px;
 `;
 
 const Layout = ({ children }) => {
   return (
     <LayoutWrapper>
+      <Navbar />
+      <SoundBar />
       <ContentArea>
-        <Sidebar />
+        <SidebarWrapper>
+          <Sidebar />
+        </SidebarWrapper>
         <MainContent>{children}</MainContent>
       </ContentArea>
       <Footer />
