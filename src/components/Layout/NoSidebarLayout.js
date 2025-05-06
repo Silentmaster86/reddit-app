@@ -1,27 +1,35 @@
 // src/components/Layout/NoSidebarLayout.js
 import React from "react";
 import styled from "styled-components";
-import Footer from "./Footer.js";
+import SubredditList from "../../features/posts/SubredditList.js";
 
-const Wrapper = styled.div`
+const Layout = styled.div`
   display: flex;
-  flex-direction: column;
   min-height: 100vh;
 `;
 
-const Content = styled.main`
+const Sidebar = styled.aside`
+  width: 260px;
+  padding: 1rem;
+  background: #1a1a1b;
+  border-right: 1px solid #343536;
+`;
+
+const Main = styled.main`
   flex: 1;
   padding: 2rem;
-  background-color: ${({ theme }) => theme.body};
-  color: ${({ theme }) => theme.text};
+  background: #030303;
+  color: white;
 `;
 
 const NoSidebarLayout = ({ children }) => {
   return (
-      <Wrapper>
-      <Content>{children}</Content>
-      <Footer />
-    </Wrapper>
+    <Layout>
+      <Sidebar>
+        <SubredditList />
+      </Sidebar>
+      <Main>{children}</Main>
+    </Layout>
   );
 };
 
