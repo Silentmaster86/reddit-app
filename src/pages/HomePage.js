@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { fetchPosts } from "../features/posts/postsSlice.js";
 import { Link } from "react-router-dom";
 import Spinner from "../components/UI/Spinner.js";
-import Layout from "../components/Layout/Layout.js"; // ✅ use Layout instead of NoSidebarLayout
 
 const Wrapper = styled.div`
   padding: 2rem;
@@ -24,7 +23,7 @@ const PostCard = styled.div`
   }
 `;
 
-const HomePageContent = () => {
+const HomePage = () => {
   const dispatch = useDispatch();
   const { posts, status } = useSelector((state) => state.posts);
 
@@ -53,11 +52,5 @@ const HomePageContent = () => {
     </Wrapper>
   );
 };
-
-const HomePage = () => (
-  <Layout>
-    <HomePageContent />
-  </Layout>
-);
 
 export default HomePage;
