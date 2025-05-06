@@ -1,7 +1,7 @@
 // src/pages/HomePage.js
 import React from "react";
 import styled from "styled-components";
-import PostList from "../features/posts/PostList";
+import PostList from "../features/posts/PostList.js";
 
 const Wrapper = styled.div`
   padding: 2rem;
