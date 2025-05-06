@@ -2,10 +2,15 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const fetchPosts = createAsyncThunk(
-  'posts/fetchPosts',
-  async () => {
-    const response = await axios.get('https://www.reddit.com/r/popular.json');
-    return response.data.data.children.map((post) => post.data);
+  "posts/fetchPosts",
+  async (_, { getState }) => {
+    const { selectedSubreddit } = getState().posts;
+    const subreddit = selectedSubreddit || "popular";
+
+    const response = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
+    const json = await response.json();
+
+    return json.data.children.map((post) => post.data);
   }
 );
 
