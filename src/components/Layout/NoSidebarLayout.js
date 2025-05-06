@@ -22,6 +22,7 @@ const NoSidebarLayout = ({ children }) => {
         <SubredditList />
       </Sidebar>
       <Main>{children}</Main>
+      <Footer />
     </Layout>
   );
 };
