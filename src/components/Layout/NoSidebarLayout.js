@@ -18,7 +18,7 @@ const Main = styled.main`
 const NoSidebarLayout = ({ children }) => {
   return (
     <Layout>
-        <SubredditList />
+        <Sidebar />
       <Main>{children}</Main>
       <Footer />
     </Layout>
