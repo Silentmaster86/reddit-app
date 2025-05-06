@@ -8,6 +8,13 @@ const Layout = styled.div`
   min-height: 100vh;
 `;
 
+const Sidebar = styled.aside`
+  width: 260px;
+  padding: 1rem;
+  background: #1a1a1b;
+  border-right: 1px solid #343536;
+`;
+
 const Main = styled.main`
   flex: 1;
   padding: 2rem;
@@ -18,9 +25,10 @@ const Main = styled.main`
 const NoSidebarLayout = ({ children }) => {
   return (
     <Layout>
-        <Sidebar />
+      <Sidebar>
+        <SubredditList />
+      </Sidebar>
       <Main>{children}</Main>
-      <Footer />
     </Layout>
   );
 };
