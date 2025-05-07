@@ -13,6 +13,8 @@ const Sidebar = styled.aside`
   padding: 1rem;
   background: #1a1a1b;
   border-right: 1px solid #343536;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.4); // 🔥 Adds depth
+  z-index: 2;
 `;
 
 const Main = styled.main`
@@ -20,7 +22,9 @@ const Main = styled.main`
   padding: 2rem;
   background: #030303;
   color: white;
+  z-index: 1;
 `;
+
 
 const NoSidebarLayout = ({ children }) => {
   return (
