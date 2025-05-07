@@ -3,7 +3,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PrivateRoute from "./PrivateRoute.js";
 import Layout from "../components/Layout/Layout.js";
-import NoSidebarLayout from "../components/Layout/NoSidebarLayout.js";
 import Spinner from "../components/UI/Spinner.js";
 
 // Lazy-loaded pages
