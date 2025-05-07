@@ -20,13 +20,38 @@ const AppRoutes = () => {
   return (
     <Suspense fallback={<Spinner />}>
       <Routes>
-       <Route path="/" element={<HomePage />} />
-        <Route path="/post/:postId" element={<PostDetails />} />
-        <Route path="/profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
+<Route
+  path="/"
+  element={
+    <Layout>
+      <HomePage />
+    </Layout>
+  }
+/>
+<Route
+  path="/post/:postId"
+  element={
+    <Layout>
+      <PostDetails />
+    </Layout>
+  }
+/>
+<Route
+  path="/profile"
+  element={
+    <PrivateRoute>
+      <Layout>
+        <ProfilePage />
+      </Layout>
+    </PrivateRoute>
+  }
+/>
+
         <Route path="/signin" element={!isAuthenticated ? <SignInPage /> : <Navigate to="/" />} />
         <Route path="/signup" element={!isAuthenticated ? <SignUpPage /> : <Navigate to="/" />} />
         <Route path="/auth/callback" element={<OAuthCallback />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<Layout><NotFound /></Layout>} />
+
 
       </Routes>
     </Suspense>
