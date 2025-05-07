@@ -47,9 +47,7 @@ const AppRoutes = () => {
           path="/profile"
           element={
             <PrivateRoute>
-              <Layout>
                 <ProfilePage />
-              </Layout>
             </PrivateRoute>
           }
         />
