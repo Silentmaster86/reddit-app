@@ -1,10 +1,10 @@
 // src/components/Layout/Layout.js
 import React from "react";
 import styled from "styled-components";
-import Navbar from "./Navbar.js";
-import Sidebar from "./Sidebar.js";
-import Footer from "./Footer.js";
-import SoundBar from "./SoundBar.js";
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
+import Footer from "./Footer";
+import SoundBar from "./SoundBar";
 
 const LayoutWrapper = styled.div`
   display: flex;
