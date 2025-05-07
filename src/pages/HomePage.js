@@ -27,9 +27,12 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const { posts, status } = useSelector((state) => state.posts);
 
-  useEffect(() => {
-    dispatch(fetchPosts());
-  }, [dispatch]);
+const selectedSubreddit = useSelector((state) => state.posts.selectedSubreddit);
+
+useEffect(() => {
+  dispatch(fetchPosts());
+}, [dispatch, selectedSubreddit]); // ✅ add dependency
+
 
   return (
     <Wrapper>
