@@ -21,51 +21,14 @@ const AppRoutes = () => {
   return (
     <Suspense fallback={<Spinner />}>
       <Routes>
-        {/* ✅ Authenticated Home Page with Layout */}
-        <Route
-          path="/"
-          element={
-            <NoSidebarLayout>
-              <HomePage />
-            </NoSidebarLayout>
-            
-          }
-        />
-
-        {/* ✅ Public Details Page with Layout */}
-        <Route
-          path="/post/:postId"
-          element={
-            <Layout>
-              <PostDetails />
-            </Layout>
-          }
-        />
-
-        {/* ✅ Protected Profile Page */}
-        <Route
-          path="/profile"
-          element={
-            <PrivateRoute>
-                <ProfilePage />
-            </PrivateRoute>
-          }
-        />
-
-        {/* ✅ Auth Pages without layout */}
+       <Route path="/" element={<HomePage />} />
+        <Route path="/post/:postId" element={<PostDetails />} />
+        <Route path="/profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
         <Route path="/signin" element={!isAuthenticated ? <SignInPage /> : <Navigate to="/" />} />
         <Route path="/signup" element={!isAuthenticated ? <SignUpPage /> : <Navigate to="/" />} />
         <Route path="/auth/callback" element={<OAuthCallback />} />
+        <Route path="*" element={<NotFound />} />
 
-        {/* ✅ 404 fallback */}
-        <Route
-          path="*"
-          element={
-            <Layout>
-              <NotFound />
-            </Layout>
-          }
-        />
       </Routes>
     </Suspense>
   );
