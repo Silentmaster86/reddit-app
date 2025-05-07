@@ -29,11 +29,10 @@ function App() {
   return (
     <Router>
       <AuthObserver />
-      <Navbar />
-      <SoundBar />
-      <AppRoutes />    
+      <AppRoutes />
     </Router>
   );
 }
+
 
 export default App;
