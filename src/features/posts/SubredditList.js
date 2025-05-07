@@ -144,10 +144,17 @@ const SubredditList = () => {
                 $active={selectedSubreddit === sub.display_name}
               >
                 <Icon
-                  src={sub.icon_img || sub.community_icon || fallbackIcon}
-                  onError={(e) => (e.target.src = fallbackIcon)}
-                  alt={sub.display_name}
-                />
+  src={
+    sub.icon_img && sub.icon_img.startsWith("https")
+      ? sub.icon_img
+      : sub.community_icon && sub.community_icon.startsWith("https")
+      ? sub.community_icon
+      : fallbackIcon
+  }
+  onError={(e) => (e.target.src = fallbackIcon)}
+  alt={sub.display_name}
+/>
+
                 <SubredditName>{sub.display_name_prefixed}</SubredditName>
               </ListItem>
             ))
