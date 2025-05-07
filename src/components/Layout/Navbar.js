@@ -8,7 +8,7 @@ import SignOut from "../../features/auth/SignOut.js";
 const Nav = styled.nav`
   background: #ffffff;
   padding: 1rem 2rem;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 2px solid #ff4500; /* 🔥 Orange Reddit border */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -16,6 +16,7 @@ const Nav = styled.nav`
   top: 0;
   z-index: 100;
 `;
+
 
 const Logo = styled(Link)`
   font-size: 1.7rem;
