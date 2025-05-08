@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import SignOut from "../../features/auth/SignOut.js";
+import ThemeSwitcher from "../Shared/ThemeSwitcher.js";
+import { useTheme } from "../../context/ThemeContext.js";
 
 const Nav = styled.nav`
   background: #ffffff;
@@ -54,11 +56,13 @@ const UserInfo = styled.div`
   align-items: center;
   gap: 0.5rem;
 `;
+const { toggleTheme, themeName } = useTheme();
 
 const Navbar = () => {
   const { isAuthenticated, user, provider } = useSelector((state) => state.auth);
 
   return (
+    <ThemeSwitcher toggleTheme={toggleTheme} currentTheme={themeName} />
     <Nav>
       <Logo to="/">RedditClone</Logo>
       <NavLinks>
