@@ -25,8 +25,10 @@ const SidebarWrapper = styled.aside`
 const MainContent = styled.main`
   flex: 1;
   padding: 2rem;
-  background-color: ${({ theme }) => theme.body || "#1a1a1b"};
-  color: ${({ theme }) => theme.text || "#d7dadc"};
+  max-width: 100%;
+  overflow-x: hidden;
+  background-color: ${({ theme }) => theme.body};
+  color: ${({ theme }) => theme.text};
 `;
 
 const Layout = ({ children }) => {
