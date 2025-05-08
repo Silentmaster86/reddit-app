@@ -19,10 +19,7 @@ const ContentArea = styled.div`
 `;
 
 const SidebarWrapper = styled.aside`
-  width: 280px;
-  background-color: #272729;
   padding: 1rem;
-  border-right: 1px solid #343536;
 `;
 
 const MainContent = styled.main`
