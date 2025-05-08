@@ -23,8 +23,6 @@ const AppContent = () => {
     <StyledThemeProvider theme={theme}>
       <Router>
         <AuthObserver />
-        <Navbar />
-        <SoundBar />
         <AppRoutes />
       </Router>
     </StyledThemeProvider>
