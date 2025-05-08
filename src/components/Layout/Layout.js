@@ -16,6 +16,8 @@ const ContentArea = styled.div`
   display: flex;
   flex: 1;
   background-color: ${({ theme }) => theme.body || "#1a1a1b"};
+  margin-top: 1rem;
+  border-radius: 15px;
 `;
 
 const SidebarWrapper = styled.aside`
