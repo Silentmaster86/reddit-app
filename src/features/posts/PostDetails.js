@@ -117,8 +117,18 @@ const PostDetails = () => {
           <Content>{post.selftext || "No content available."}</Content>
         </PostCardWrapper>
 
-        <CommentsTitle>Comments ({comments.length})</CommentsTitle>
-        <CommentsSection postId={postId} />
+  <CommentsTitle>Reddit Comments ({comments.length})</CommentsTitle>
+  {comments.length === 0 ? (
+    <p>No comments found.</p>
+  ) : (
+    comments.map((comment) => (
+      <div key={comment.id} style={{ marginBottom: "1.5rem" }}>
+        <strong>u/{comment.author}</strong>
+        <p>{comment.body}</p>
+        <hr style={{ borderColor: "#343536" }} />
+      </div>
+    ))
+  )}
 
         <BackLink to="/">← Back to Home</BackLink>
       </motion.div>
