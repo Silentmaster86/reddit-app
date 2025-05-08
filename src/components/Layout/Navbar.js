@@ -10,7 +10,7 @@ import { useTheme } from "../../context/ThemeContext.js";
 const Nav = styled.nav`
   background: #ffffff;
   padding: 1rem 2rem;
-  border-bottom: 2px solid #ff4500; /* 🔥 Orange Reddit border */
+  border-bottom: 2px solid #ff4500;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -18,7 +18,6 @@ const Nav = styled.nav`
   top: 0;
   z-index: 100;
 `;
-
 
 const Logo = styled(Link)`
   font-size: 1.7rem;
@@ -56,37 +55,34 @@ const UserInfo = styled.div`
   align-items: center;
   gap: 0.5rem;
 `;
-const { toggleTheme, themeName } = useTheme();
 
 const Navbar = () => {
+  const { toggleTheme, themeName } = useTheme(); // ✅ moved inside component
   const { isAuthenticated, user, provider } = useSelector((state) => state.auth);
 
   return (
-    <ThemeSwitcher toggleTheme={toggleTheme} currentTheme={themeName} />
     <Nav>
       <Logo to="/">RedditClone</Logo>
       <NavLinks>
         <NavLink to="/">Home</NavLink>
-
-{isAuthenticated ? (
-  <>
-    <NavLink to="/profile">Profile</NavLink>
-
-    <SignOut /> {/* ✅ use the real logout button here */}
-
-    {provider === "reddit" && user?.avatar && (
-      <UserInfo>
-        <Avatar src={user.avatar} alt="avatar" />
-        <span>{user.name}</span>
-      </UserInfo>
-    )}
-  </>
-) : (
-  <>
-    <NavLink to="/signin">Sign In</NavLink>
-    <NavLink to="/signup">Sign Up</NavLink>
-  </>
-)}
+        <ThemeSwitcher toggleTheme={toggleTheme} currentTheme={themeName} /> {/* ✅ Moved inside */}
+        {isAuthenticated ? (
+          <>
+            <NavLink to="/profile">Profile</NavLink>
+            <SignOut />
+            {provider === "reddit" && user?.avatar && (
+              <UserInfo>
+                <Avatar src={user.avatar} alt="avatar" />
+                <span>{user.name}</span>
+              </UserInfo>
+            )}
+          </>
+        ) : (
+          <>
+            <NavLink to="/signin">Sign In</NavLink>
+            <NavLink to="/signup">Sign Up</NavLink>
+          </>
+        )}
       </NavLinks>
     </Nav>
   );
