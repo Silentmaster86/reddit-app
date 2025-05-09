@@ -20,7 +20,7 @@ const PostCardWrapper = styled.div`
   color: ${({ theme }) => theme.text};
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: rgb(0 0 0 / 54%) 0px 4px 8px;
   margin-bottom: 2rem;
 `;
 
@@ -72,7 +72,7 @@ const RedditComment = styled.div`
   padding: 1rem;
   border-radius: 12px;
   margin-bottom: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 4p;
+  box-shadow: rgb(0 0 0 / 54%) 0px 4px 8px;
 `;
 
 const Author = styled.div`
