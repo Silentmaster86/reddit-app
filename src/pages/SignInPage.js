@@ -2,8 +2,6 @@
 import React from "react";
 import styled from "styled-components";
 import SignIn from "../features/auth/SignIn.js";
-import Sidebar from "../components/Layout/Navbar.js";
-import SoundBar from "../components/Layout/SoundBar.js";
 
 const Container = styled.div`
   display: flex;
@@ -31,16 +29,12 @@ const Title = styled.h2`
 
 const SignInPage = () => {
   return (
-    <>
-    <Navbar />
-    <SoundBar />
     <Container>
       <Card>
         <Title>Sign In to Reddit Clone</Title>
         <SignIn />
       </Card>
     </Container>
-    </>
   );
 };
 
