@@ -145,6 +145,14 @@ const SignIn = () => {
       <Button onClick={handleRedditSignIn}>
         Sign In with Reddit 🚀
       </Button>
+
+        <Button
+          type="button"
+          style={{ background: "#0079d3" }}
+          onClick={() => window.open("https://www.reddit.com/register", "_blank")}
+          >
+  Sign Up on Reddit 🔗
+</Button>
     </Wrapper>
   );
 };
