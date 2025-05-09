@@ -2,7 +2,7 @@
 import React from "react";
 import styled from "styled-components";
 import SignIn from "../features/auth/SignIn.js";
-import Sidebar from "../components/Layout/Sidebar.js";
+import Sidebar from "../components/Layout/Navbar.js";
 import SoundBar from "../components/Layout/SoundBar.js";
 
 const Container = styled.div`
@@ -31,6 +31,7 @@ const Title = styled.h2`
 
 const SignInPage = () => {
   return (
+    <>
     <Navbar />
     <SoundBar />
     <Container>
@@ -39,6 +40,7 @@ const SignInPage = () => {
         <SignIn />
       </Card>
     </Container>
+    </>
   );
 };
 
