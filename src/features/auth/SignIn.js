@@ -7,6 +7,8 @@ import { loginFirebase } from "./authSlice.js";
 import { getLoginUrl } from "../../api/reddit.js";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Sidebar from "../components/Layout/Navbar.js";
+import SoundBar from "../components/Layout/SoundBar.js";
 
 // Styled Components
 const Wrapper = styled.div`
@@ -110,6 +112,9 @@ const SignIn = () => {
   };
 
   return (
+    <>
+    <Navbar />
+    <SoundBar />
     <Wrapper>
       <Form onSubmit={handleEmailSignIn}>
         <Heading>Sign In with Email</Heading>
@@ -151,9 +156,10 @@ const SignIn = () => {
           style={{ background: "#0079d3" }}
           onClick={() => window.open("https://www.reddit.com/register", "_blank")}
           >
-  Sign Up on Reddit 🔗
-</Button>
+          Sign Up on Reddit 🔗
+    </Button>
     </Wrapper>
+    </>
   );
 };
 
