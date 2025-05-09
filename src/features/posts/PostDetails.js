@@ -70,9 +70,9 @@ const RedditComment = styled.div`
   background: ${({ theme }) => theme.body};
   color: ${({ theme }) => theme.text};
   padding: 1rem;
-  border-radius: 8px;
-  border: 1px solid #343536;
+  border-radius: 12px;
   margin-bottom: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 4p;
 `;
 
 const Author = styled.div`
