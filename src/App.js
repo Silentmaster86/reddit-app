@@ -23,6 +23,8 @@ const AppContent = () => {
     <StyledThemeProvider theme={theme}>
       <Router>
         <AuthObserver />
+        <Navbar />
+        <SoundBar />
         <AppRoutes />
       </Router>
     </StyledThemeProvider>
@@ -32,8 +34,6 @@ const AppContent = () => {
 export default function App() {
   return (
     <ThemeProvider>
-      <Navbar />
-      <SoundBar />
       <AppContent />
     </ThemeProvider>
   );
