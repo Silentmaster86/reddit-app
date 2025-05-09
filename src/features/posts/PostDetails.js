@@ -67,7 +67,8 @@ const CommentsTitle = styled.h2`
 `;
 
 const RedditComment = styled.div`
-  background: #272729;
+  background: ${({ theme }) => theme.body};
+  color: ${({ theme }) => theme.text};
   padding: 1rem;
   border-radius: 8px;
   border: 1px solid #343536;
