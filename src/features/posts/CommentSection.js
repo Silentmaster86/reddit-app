@@ -74,7 +74,7 @@ const CommentAuthor = styled.div`
 
 const CommentContent = styled.div`
   margin: 0.5rem 0;
-  color: ${({ theme }) => theme.text};
+  color: #d7dadc;
 `;
 
 const CommentTime = styled.div`
