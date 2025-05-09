@@ -9,8 +9,9 @@ import { useTheme } from "../../context/ThemeContext.js";
 
 const Nav = styled.nav`
   background: #ffffff;
+  margin-bottom: 1rem;
   padding: 1rem 2rem;
-  border-bottom: 2px solid #ff4500;
+  border-bottom: 5px solid #ff4500;
   display: flex;
   justify-content: space-between;
   align-items: center;
