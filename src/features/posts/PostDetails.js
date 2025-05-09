@@ -1,22 +1,21 @@
 // src/features/posts/PostDetails.js
-
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import CommentsSection from "./CommentSection.js"; // ✅ Make sure path is correct!
+import CommentsSection from "./CommentSection.js"; // ✅ For Firebase/Reddit posting
 
 const Wrapper = styled.div`
   margin-top: 2rem;
   padding: 2rem;
-  background: #1a1a1b;
-  color: #d7dadc;
+  background: ${({ theme }) => theme.body};
+  color: ${({ theme }) => theme.text};
   min-height: 100vh;
 `;
 
 const PostCardWrapper = styled.div`
-  background: #ffffff;
-  color: #1a1a1a;
+  background: ${({ theme }) => theme.card};
+  color: ${({ theme }) => theme.text};
   border-radius: 12px;
   padding: 2rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
@@ -30,7 +29,7 @@ const Title = styled.h1`
 
 const Meta = styled.div`
   font-size: 0.9rem;
-  color: #7c7c7c;
+  color: ${({ theme }) => theme.textSecondary || "#888"};
   margin-bottom: 1.5rem;
 `;
 
@@ -41,7 +40,7 @@ const Content = styled.div`
 `;
 
 const BackLink = styled(Link)`
-  color: #0079d3;
+  color: ${({ theme }) => theme.link || "#0079d3"};
   text-decoration: none;
   font-weight: bold;
 
@@ -62,7 +61,25 @@ const CommentsTitle = styled.h2`
   font-size: 1.5rem;
   margin-top: 2rem;
   margin-bottom: 1rem;
-  color: #d7dadc;
+  color: ${({ theme }) => theme.text};
+`;
+
+const RedditComment = styled.div`
+  background: #272729;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #343536;
+  margin-bottom: 1rem;
+`;
+
+const Author = styled.div`
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #ffb000;
+`;
+
+const Body = styled.p`
+  margin: 0;
 `;
 
 const PostDetails = () => {
@@ -77,12 +94,12 @@ const PostDetails = () => {
       try {
         const response = await fetch(`https://www.reddit.com/comments/${postId}.json`);
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        
+
         const data = await response.json();
         const postData = data[0]?.data?.children[0]?.data || null;
         const commentsData = (data[1]?.data?.children || [])
-          .map(child => child.data)
-          .filter(comment => comment.body);
+          .map((child) => child.data)
+          .filter((comment) => comment.body);
 
         setPost(postData);
         setComments(commentsData);
@@ -117,18 +134,20 @@ const PostDetails = () => {
           <Content>{post.selftext || "No content available."}</Content>
         </PostCardWrapper>
 
-  <CommentsTitle>Reddit Comments ({comments.length})</CommentsTitle>
-  {comments.length === 0 ? (
-    <p>No comments found.</p>
-  ) : (
-    comments.map((comment) => (
-      <div key={comment.id} style={{ marginBottom: "1.5rem" }}>
-        <strong>u/{comment.author}</strong>
-        <p>{comment.body}</p>
-        <hr style={{ borderColor: "#343536" }} />
-      </div>
-    ))
-  )}
+        <CommentsTitle>Reddit Comments ({comments.length})</CommentsTitle>
+        {comments.length === 0 ? (
+          <p>No comments found.</p>
+        ) : (
+          comments.map((comment) => (
+            <RedditComment key={comment.id}>
+              <Author>u/{comment.author}</Author>
+              <Body>{comment.body}</Body>
+            </RedditComment>
+          ))
+        )}
+
+        <CommentsTitle>Your Comments</CommentsTitle>
+        <CommentsSection postId={postId} />
 
         <BackLink to="/">← Back to Home</BackLink>
       </motion.div>
