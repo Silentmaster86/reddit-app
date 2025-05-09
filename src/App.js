@@ -32,6 +32,8 @@ const AppContent = () => {
 export default function App() {
   return (
     <ThemeProvider>
+      <Navbar />
+      <SoundBar />
       <AppContent />
     </ThemeProvider>
   );
