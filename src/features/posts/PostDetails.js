@@ -1,9 +1,11 @@
 // src/features/posts/PostDetails.js
+
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import CommentsSection from "./CommentSection.js"; // ✅ For Firebase/Reddit posting
+import CommentsSection from "./CommentSection.js";
+import { useSelector } from "react-redux";
 
 const Wrapper = styled.div`
   margin-top: 2rem;
@@ -82,17 +84,29 @@ const Body = styled.p`
   margin: 0;
 `;
 
+const SortSelect = styled.select`
+  margin-bottom: 1rem;
+  background: #272729;
+  color: white;
+  border: 1px solid #343536;
+  padding: 0.5rem;
+  border-radius: 4px;
+`;
+
 const PostDetails = () => {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [sort, setSort] = useState("top");
+
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   useEffect(() => {
     const fetchPostAndComments = async () => {
       try {
-        const response = await fetch(`https://www.reddit.com/comments/${postId}.json`);
+        const response = await fetch(`https://www.reddit.com/comments/${postId}.json?sort=${sort}`);
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
         const data = await response.json();
@@ -112,7 +126,7 @@ const PostDetails = () => {
     };
 
     fetchPostAndComments();
-  }, [postId]);
+  }, [postId, sort]);
 
   if (loading) return <CenteredMessage>Loading post details...</CenteredMessage>;
   if (error) return <CenteredMessage error>{error}</CenteredMessage>;
@@ -128,13 +142,19 @@ const PostDetails = () => {
         <PostCardWrapper>
           <Title>{post.title}</Title>
           <Meta>
-            Posted by <strong>u/{post.author}</strong> in <strong>r/{post.subreddit}</strong> ·{" "}
+            Posted by <strong>u/{post.author}</strong> in <strong>r/{post.subreddit}</strong> · {" "}
             {new Date(post.created_utc * 1000).toLocaleDateString()}
           </Meta>
           <Content>{post.selftext || "No content available."}</Content>
         </PostCardWrapper>
 
         <CommentsTitle>Reddit Comments ({comments.length})</CommentsTitle>
+        <SortSelect value={sort} onChange={(e) => setSort(e.target.value)}>
+          <option value="top">Top</option>
+          <option value="new">New</option>
+          <option value="best">Best</option>
+        </SortSelect>
+
         {comments.length === 0 ? (
           <p>No comments found.</p>
         ) : (
@@ -146,8 +166,12 @@ const PostDetails = () => {
           ))
         )}
 
-        <CommentsTitle>Your Comments</CommentsTitle>
-        <CommentsSection postId={postId} />
+        {isAuthenticated && (
+          <>
+            <CommentsTitle>Your Comments</CommentsTitle>
+            <CommentsSection postId={postId} />
+          </>
+        )}
 
         <BackLink to="/">← Back to Home</BackLink>
       </motion.div>
