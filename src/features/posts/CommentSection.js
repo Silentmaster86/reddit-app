@@ -31,9 +31,9 @@ const CommentForm = styled.form`
 
 const Textarea = styled.textarea`
   padding: 0.75rem;
-  background: #272729;
-  border: 1px solid #343536;
-  color: #d7dadc;
+  background: ${({ theme }) => theme.card};
+  border: 1px solid ${({ theme }) => theme.border};
+  color: ${({ theme }) => theme.text};
   border-radius: 6px;
   resize: vertical;
   min-height: 100px;
@@ -74,7 +74,7 @@ const CommentAuthor = styled.div`
 
 const CommentContent = styled.div`
   margin: 0.5rem 0;
-  color: #d7dadc;
+  color: ${({ theme }) => theme.text};
 `;
 
 const CommentTime = styled.div`
