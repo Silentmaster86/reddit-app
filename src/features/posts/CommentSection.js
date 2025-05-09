@@ -3,7 +3,17 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { auth, db } from "../../firebase.js";
-import { collection, query, where, onSnapshot, addDoc, serverTimestamp, getDoc, doc, deleteDoc } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  onSnapshot,
+  addDoc,
+  serverTimestamp,
+  getDoc,
+  doc,
+  deleteDoc
+} from "firebase/firestore";
 import { useAuth } from "../../hooks/useAuth.js";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
@@ -89,9 +99,10 @@ const CommentSection = ({ postId }) => {
   const [justPostedId, setJustPostedId] = useState(null);
   const user = useAuth();
   const redditUser = useSelector((state) => state.auth.user);
+  const provider = useSelector((state) => state.auth.provider);
 
   useEffect(() => {
-    if (!postId) return;
+    if (!postId || provider === "reddit") return; // Only Firebase for now
 
     const commentsQuery = query(
       collection(db, "comments"),
@@ -111,19 +122,47 @@ const CommentSection = ({ postId }) => {
     });
 
     return () => unsubscribe();
-  }, [postId]);
+  }, [postId, provider]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!newComment.trim()) return;
 
-    const currentUser = user || redditUser;
-    const userId = currentUser?.uid || currentUser?.id;
+    if (provider === "reddit") {
+      const accessToken = redditUser?.accessToken;
+      if (!accessToken) return alert("You must be logged in with Reddit to comment.");
 
-    if (!userId) {
-      alert("You must be signed in to comment.");
+      try {
+        const response = await fetch("https://oauth.reddit.com/api/comment", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams({
+            api_type: "json",
+            thing_id: `t3_${postId}`,
+            text: newComment,
+          }),
+        });
+
+        const data = await response.json();
+        if (data?.json?.errors?.length) throw new Error(data.json.errors[0][1]);
+
+        alert("✅ Comment posted to Reddit!");
+        setNewComment("");
+      } catch (err) {
+        console.error("❌ Reddit comment failed:", err);
+        alert("Failed to post comment on Reddit.");
+      }
       return;
     }
+
+    // Default to Firebase
+    const currentUser = user;
+    const userId = currentUser?.uid;
+
+    if (!userId) return alert("You must be logged in to comment.");
 
     try {
       const docRef = await addDoc(collection(db, "comments"), {
@@ -135,20 +174,7 @@ const CommentSection = ({ postId }) => {
       setJustPostedId(docRef.id);
       setNewComment("");
     } catch (err) {
-      console.error("Error posting comment:", err);
-    }
-  };
-
-  const handleDelete = async (commentId, authorId) => {
-    const currentUser = user || redditUser;
-    const userId = currentUser?.uid || currentUser?.id;
-
-    if (userId !== authorId) return;
-
-    try {
-      await deleteDoc(doc(db, "comments", commentId));
-    } catch (err) {
-      console.error("Error deleting comment:", err);
+      console.error("Error posting comment to Firebase:", err);
     }
   };
 
@@ -170,39 +196,28 @@ const CommentSection = ({ postId }) => {
         <SubmitButton type="submit">Post Comment</SubmitButton>
       </CommentForm>
 
-      <CommentList>
-        <AnimatePresence>
-          {comments.map((comment) => (
-            <SingleComment
-              key={comment.id}
-              variants={animationVariant}
-              custom={comment.id === justPostedId}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              layout
-              onAnimationComplete={() => {
-                if (comment.id === justPostedId) {
-                  setTimeout(() => setJustPostedId(null), 1000); // Remove highlight
-                }
-              }}
-            >
-              <CommentAuthor>{comment.author.username || "Anonymous"}</CommentAuthor>
-              <CommentContent>{comment.content}</CommentContent>
-              <CommentTime>{formatTimestamp(comment.timestamp)}</CommentTime>
-              <LikeButton itemId={comment.id} itemType="comments" />
-              {user && user.uid === comment.authorId && (
-                <SubmitButton
-                  type="button"
-                  onClick={() => handleDelete(comment.id, comment.authorId)}
-                >
-                  Delete
-                </SubmitButton>
-              )}
-            </SingleComment>
-          ))}
-        </AnimatePresence>
-      </CommentList>
+      {provider === "firebase" && (
+        <CommentList>
+          <AnimatePresence>
+            {comments.map((comment) => (
+              <SingleComment
+                key={comment.id}
+                variants={animationVariant}
+                custom={comment.id === justPostedId}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                layout
+              >
+                <CommentAuthor>{comment.author.username || "Anonymous"}</CommentAuthor>
+                <CommentContent>{comment.content}</CommentContent>
+                <CommentTime>{formatTimestamp(comment.timestamp)}</CommentTime>
+                <LikeButton itemId={comment.id} itemType="comments" />
+              </SingleComment>
+            ))}
+          </AnimatePresence>
+        </CommentList>
+      )}
     </Wrapper>
   );
 };
