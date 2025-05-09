@@ -33,6 +33,23 @@ const SignUpPage = () => {
       <Card>
         <Title>Create Your Account</Title>
         <SignUp />
+
+    <Button
+  type="button"
+  style={{
+    marginTop: "1rem",
+    background: "#0079d3",
+    color: "white",
+    border: "none",
+    padding: "0.75rem",
+    borderRadius: "5px",
+    cursor: "pointer",
+  }}
+  onClick={() => window.open("https://www.reddit.com/register", "_blank")}
+>
+  Prefer Reddit? Sign Up on Reddit 🔗
+</Button>
+
       </Card>
     </Container>
   );
