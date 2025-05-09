@@ -1,10 +1,8 @@
 // src/components/Layout/Layout.js
 import React from "react";
 import styled from "styled-components";
-import Navbar from "./Navbar.js";
 import Sidebar from "./Sidebar.js";
 import Footer from "./Footer.js";
-import SoundBar from "./SoundBar.js";
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -36,8 +34,6 @@ const MainContent = styled.main`
 const Layout = ({ children }) => {
   return (
     <LayoutWrapper>
-      <Navbar />
-      <SoundBar />
       <ContentArea>
         <SidebarWrapper>
           <Sidebar />
