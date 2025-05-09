@@ -7,8 +7,8 @@ import { loginFirebase } from "./authSlice.js";
 import { getLoginUrl } from "../../api/reddit.js";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Sidebar from "../components/Layout/Navbar.js";
-import SoundBar from "../components/Layout/SoundBar.js";
+import Sidebar from "../../components/Layout/Navbar.js";
+import SoundBar from "../../components/Layout/SoundBar.js";
 
 // Styled Components
 const Wrapper = styled.div`
