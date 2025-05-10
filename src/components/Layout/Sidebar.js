@@ -25,7 +25,7 @@ const SidebarHeader = styled.h2`
   margin-bottom: 1.5rem;
 `;
 
-const Sidebar = ({ onLinkClick }) => {
+const Sidebar = ({ onLinkClick, open }) => {
   const sidebarRef = useRef(null);
 
   useEffect(() => {
