@@ -16,10 +16,20 @@ const ContentArea = styled.div`
   background-color: ${({ theme }) => theme.body || "#1a1a1b"};
   margin-top: 1rem;
   border-radius: 15px;
+
+    @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const SidebarWrapper = styled.aside`
   padding: 1rem;
+
+    @media (max-width: 768px) {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #343536;
+  }
 `;
 
 const MainContent = styled.main`
@@ -29,6 +39,10 @@ const MainContent = styled.main`
   overflow-x: hidden;
   background-color: ${({ theme }) => theme.body};
   color: ${({ theme }) => theme.text};
+
+    @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 const Layout = ({ children }) => {
