@@ -1,23 +1,14 @@
-// src/context/SoundBarContext.js
 import { createContext, useContext, useState } from "react";
 
 const SoundBarContext = createContext();
 
 export const SoundBarProvider = ({ children }) => {
   const [visible, setVisible] = useState(true);
-  const [isCompact, setIsCompact] = useState(false);
 
-  const toggleVisible = () => {
-    if (!visible) {
-      setVisible(true);
-      setIsCompact(false);
-    } else {
-      setIsCompact((prev) => !prev);
-    }
-  };
+  const toggleVisible = () => setVisible((prev) => !prev);
 
   return (
-    <SoundBarContext.Provider value={{ visible, isCompact, toggleVisible }}>
+    <SoundBarContext.Provider value={{ visible, toggleVisible }}>
       {children}
     </SoundBarContext.Provider>
   );
