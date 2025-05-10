@@ -3,7 +3,7 @@ import React, { createContext, useContext, useRef, useState, useEffect } from "r
 
 const stations = [
   {
-    name: "Radio stations - UK",
+    name: "-- Radio-UK --",
   },
   {
     name: "BBC Radio 1",
@@ -36,7 +36,7 @@ const stations = [
     logo: "https://radiotoday.co.uk/wp-content/uploads/2025/02/radiox90s.jpg",
   },
     {
-    name: "Radio stations - PL",    
+    name: "-- Radio-PL --",    
     },
   {
     name: "PR Chicago",
