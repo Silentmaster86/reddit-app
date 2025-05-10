@@ -81,15 +81,17 @@ const Avatar = styled.img`
   object-fit: cover;
 `;
 
-const Navbar = () => {
+const Navbar = ({ onToggleSidebar }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { isAuthenticated, user, provider } = useSelector((state) => state.auth);
   const { toggleTheme, themeName } = useTheme();
-  const { toggleVisible, isCompact } = useSoundBarToggle();
+  const { toggleVisible } = useSoundBarToggle();
 
   return (
     <Nav>
       <NavHeader>
+        <Hamburger onClick={onToggleSidebar}>☰</Hamburger>
+    
         <Logo to="/">RedditClone</Logo>
 
         <button
@@ -103,37 +105,9 @@ const Navbar = () => {
             cursor: "pointer",
             marginLeft: "1rem"
           }}
-            title={isCompact ? "Expand SoundBar" : "Collapse SoundBar"}>
             <span role="img" aria-label="Music">🎵</span>
         </button>
-
-    
-        <Hamburger onClick={() => setMenuOpen((prev) => !prev)}>☰</Hamburger>
       </NavHeader>
-
-      <NavLinks open={menuOpen}>
-        <NavLink to="/">Home</NavLink>
-
-        {isAuthenticated ? (
-          <>
-            <NavLink to="/profile">Profile</NavLink>
-            <SignOut />
-            {provider === "reddit" && user?.avatar && (
-              <UserInfo>
-                <Avatar src={user.avatar} alt="avatar" />
-                <span>{user.name}</span>
-              </UserInfo>
-            )}
-          </>
-        ) : (
-          <>
-            <NavLink to="/signin">Sign In</NavLink>
-            <NavLink to="/signup">Sign Up</NavLink>
-          </>
-        )}
-
-        <ThemeSwitcher toggleTheme={toggleTheme} currentTheme={themeName} />
-      </NavLinks>
     </Nav>
   );
 };
