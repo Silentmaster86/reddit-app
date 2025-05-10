@@ -6,7 +6,6 @@ import SignOut from "../../features/auth/SignOut.js";
 import ThemeSwitcher from "../Shared/ThemeSwitcher.js";
 import { useTheme } from "../../context/ThemeContext.js";
 import { useSoundBarToggle } from "../../context/SoundBarContext.js";
-import { FaMusic } from "react-icons/fa";
 
 const Nav = styled.nav`
   background: #ffffff;
@@ -94,19 +93,20 @@ const Navbar = () => {
         <Logo to="/">RedditClone</Logo>
 
         <button
-          onClick={toggleVisible}
-          style={{
-          background: "transparent",
-          border: "none",
-          color: "#ff4500",
-          fontSize: "1.4rem",
-          cursor: "pointer",
-          marginLeft: "1rem"
-      }}
-    title={isCompact ? "Expand SoundBar" : "Collapse SoundBar"}
-  >
-    <FaMusic />
-  </button>
+  onClick={toggleVisible}
+  style={{
+    background: "transparent",
+    border: "none",
+    color: "#ff4500",
+    fontSize: "1.4rem",
+    cursor: "pointer",
+    marginLeft: "1rem"
+  }}
+  title={isCompact ? "Expand SoundBar" : "Collapse SoundBar"}
+>
+  <span role="img" aria-label="Music">🎵</span>
+</button>
+
     
         <Hamburger onClick={() => setMenuOpen((prev) => !prev)}>☰</Hamburger>
       </NavHeader>
