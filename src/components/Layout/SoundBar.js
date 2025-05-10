@@ -41,16 +41,6 @@ const Box = styled(motion.div)`
   color: white;
   justify-content: space-between;
   margin-top: 1rem;
-
-  @media (max-width: 768px) {
-    position: fixed;
-    bottom: 4.5rem;
-    left: 0;
-    right: 0;
-    z-index: 999;
-    margin: 0;
-    border-radius: 0;
-  }
 `;
 
 const Line = styled(motion.span)`
