@@ -30,9 +30,8 @@ const HomePage = () => {
 const selectedSubreddit = useSelector((state) => state.posts.selectedSubreddit);
 
 useEffect(() => {
-  dispatch(fetchPosts());
-}, [dispatch, selectedSubreddit]); // ✅ add dependency
-
+  dispatch(fetchPosts(selectedSubreddit));
+}, [dispatch, selectedSubreddit]);
 
   return (
     <Wrapper>
