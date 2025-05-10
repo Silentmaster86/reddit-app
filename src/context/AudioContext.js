@@ -6,14 +6,14 @@ const stations = [
     name: "-- Radio-UK --",
   },
   {
-    name: "BBC Radio 1",
-    url: "https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/cfs/bbc_radio_one.mpd",
+    name: "BBC Radio 1 Dance",
+    url: "https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/cfs/bbc_radio_one_dance.mpd",
     logo: "https://i.pinimg.com/736x/e9/2f/91/e92f916125a9f0d9494e4590349852ce.jpg",
   },
   {
     name: "Capital Dance",
     url: "https://media-ice.musicradio.com/CapitalDance",
-    logo: "https://kuasark.com/files/stations-logos/capital-dance.png",
+    logo: "https://ichef.bbci.co.uk/images/ic/320x320/p0jgy4mq.jpg.webp",
   },
   {
     name: "Capital FM",
