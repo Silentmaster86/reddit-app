@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import styled, { keyframes } from "styled-components";
 import { useAudio } from "../../context/AudioContext.js";
-import useSoundBarToggle from "../../context/SoundBarContext.js";
+import { useSoundBarToggle } from "../../context/SoundBarContext.js";
 
 
 const Wrapper = styled.div`
