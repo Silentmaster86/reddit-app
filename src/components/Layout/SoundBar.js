@@ -148,7 +148,7 @@ const SoundBar = () => {
   } = useAudio();
 
   const [isOpen, setIsOpen] = useState(true);
-  const { visible, isCompact } = useSoundBarToggle();
+  const { visible } = useSoundBarToggle();
   if (!visible) return null;
 
 
