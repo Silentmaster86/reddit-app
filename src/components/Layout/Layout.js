@@ -71,21 +71,17 @@ const Layout = ({ children }) => {
   const closeSidebar = () => setSidebarOpen(false);
 
   return (
-    <LayoutWrapper>
-      <Navbar onToggleSidebar={toggleSidebar} />
-      
-      {/* Sidebar (placed outside ContentArea for clean separation) */}
-      <SidebarContainer open={sidebarOpen}>
-        <Sidebar open={sidebarOpen} onLinkClick={closeSidebar} />
-      </SidebarContainer>
-      <Overlay open={sidebarOpen} onClick={closeSidebar} />
+<LayoutWrapper>
+  <Navbar />
+  <ContentArea>
+    <SidebarWrapper>
+      <Sidebar />
+    </SidebarWrapper>
+    <MainContent>{children}</MainContent>
+  </ContentArea>
+  <Footer />
+</LayoutWrapper>
 
-      <ContentArea>
-        <MainContent>{children}</MainContent>
-      </ContentArea>
-
-      <Footer />
-    </LayoutWrapper>
   );
 };
 
