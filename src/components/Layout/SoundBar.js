@@ -24,10 +24,6 @@ const ToggleButton = styled.button`
   font-size: 1.5rem;
   z-index: 1000;
   cursor: pointer;
-
-  @media (max-width: 768px) {
-    display: block;
-  }
 `;
 
 const Box = styled(motion.div)`
