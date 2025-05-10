@@ -8,7 +8,6 @@ import { useTheme } from "../../context/ThemeContext.js";
 import { useSoundBarToggle } from "../../context/SoundBarContext.js";
 import { FaMusic } from "react-icons/fa";
 
-
 const Nav = styled.nav`
   background: #ffffff;
   padding: 1rem 2rem;
@@ -87,6 +86,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { isAuthenticated, user, provider } = useSelector((state) => state.auth);
   const { toggleTheme, themeName } = useTheme();
+  const { toggleVisible, isCompact } = useSoundBarToggle();
 
   return (
     <Nav>
