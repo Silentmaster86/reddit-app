@@ -45,42 +45,6 @@ const Hamburger = styled.button`
   }
 `;
 
-const NavLinks = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  margin-top: 1rem;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
-    display: ${({ open }) => (open ? "flex" : "none")};
-  }
-`;
-
-const NavLink = styled(Link)`
-  text-decoration: none;
-  color: #333;
-  font-weight: 700;
-
-  &:hover {
-    color: #ff4500;
-  }
-`;
-
-const UserInfo = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
-const Avatar = styled.img`
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-`;
-
 const Navbar = ({ onToggleSidebar }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { isAuthenticated, user, provider } = useSelector((state) => state.auth);
