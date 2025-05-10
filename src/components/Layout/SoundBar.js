@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import styled, { keyframes } from "styled-components";
 import { useAudio } from "../../context/AudioContext.js";
+import { useSoundBarToggle } from "../../context/SoundBarToggleContext";
+
 
 const Wrapper = styled.div`
   position: relative;
@@ -146,81 +148,100 @@ const SoundBar = () => {
   } = useAudio();
 
   const [isOpen, setIsOpen] = useState(true);
+  const { visible, isCompact } = useSoundBarToggle();
+  if (!visible) return null;
+
 
   return (
-    <Wrapper>
-      <ToggleButton onClick={() => setIsOpen((prev) => !prev)}>
-        🎵
-      </ToggleButton>
+  <Wrapper>
+    <ToggleButton onClick={() => setIsOpen((prev) => !prev)}>
+      🎵
+    </ToggleButton>
 
-      <AnimatePresence>
-        {isOpen && (
-          <Box
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 100, opacity: 0 }}
-            transition={{ duration: 0.4 }}
-          >
-            <Logo src={currentStation.logo} alt={currentStation.name} />
+    <AnimatePresence>
+      {isOpen && (
+        <Box
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 100, opacity: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          {isCompact ? (
+            <>
+              <Logo src={currentStation.logo} alt="logo" />
+              <Button onClick={togglePlay}>
+                {isPlaying ? "⏸️" : "▶️"}
+              </Button>
+              <span>{currentStation.name}</span>
+            </>
+          ) : (
+            <>
+              <Logo src={currentStation.logo} alt={currentStation.name} />
 
-            <div style={{ display: "flex" }}>
-              {[0.1, 0.2, 0.3, 0.4, 0.5].map((delay, i) => (
-                <Line
-                  key={i}
-                  variants={{
-                    playing: {
-                      scaleY: [1, 2, 1.3, 2.5, 1],
-                      transition: { duration: 1, repeat: Infinity }
-                    },
-                    paused: { scaleY: 1 }
-                  }}
-                  animate={isPlaying ? "playing" : "paused"}
-                  transition={{ delay }}
-                />
-              ))}
-            </div>
+              <div style={{ display: "flex" }}>
+                {[0.1, 0.2, 0.3, 0.4, 0.5].map((delay, i) => (
+                  <Line
+                    key={i}
+                    variants={{
+                      playing: {
+                        scaleY: [1, 2, 1.3, 2.5, 1],
+                        transition: { duration: 1, repeat: Infinity }
+                      },
+                      paused: { scaleY: 1 }
+                    }}
+                    animate={isPlaying ? "playing" : "paused"}
+                    transition={{ delay }}
+                  />
+                ))}
+              </div>
 
-            <Button onClick={togglePlay}>
-              {isPlaying ? "⏸️ Pause" : "▶️ Play"}
-            </Button>
+              <Button onClick={togglePlay}>
+                {isPlaying ? "⏸️ Pause" : "▶️ Play"}
+              </Button>
 
-            <Select
-              onChange={(e) => {
-                const selected = stations.find((s) => s.url === e.target.value);
-                changeStation(selected);
-              }}
-              value={currentStation?.url}
-            >
-              {stations.map((station, index) => (
-                <option key={index} value={station.url}>
-                  {station.name}
-                </option>
-              ))}
-            </Select>
+              <Select
+                onChange={(e) => {
+                  const selected = stations.find(
+                    (s) => s.url === e.target.value
+                  );
+                  changeStation(selected);
+                }}
+                value={currentStation?.url}
+              >
+                {stations.map((station, index) => (
+                  <option key={index} value={station.url}>
+                    {station.name}
+                  </option>
+                ))}
+              </Select>
 
-            <Volume
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              value={volume}
-              onChange={(e) => setVolume(parseFloat(e.target.value))}
-            />
+              <Volume
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={volume}
+                onChange={(e) => setVolume(parseFloat(e.target.value))}
+              />
 
-            <Button onClick={toggleMute}>{isMuted ? "🔇 Unmute" : "🔊 Mute"}</Button>
+              <Button onClick={toggleMute}>
+                {isMuted ? "🔇 Unmute" : "🔊 Mute"}
+              </Button>
 
-            <NowPlaying>
-              <span>
-                {isPlaying
-                  ? `🎧 Now Playing: ${currentStation.name}`
-                  : "⏸️ Paused"}
-              </span>
-            </NowPlaying>
-          </Box>
-        )}
-      </AnimatePresence>
-    </Wrapper>
-  );
+              <NowPlaying>
+                <span>
+                  {isPlaying
+                    ? `🎧 Now Playing: ${currentStation.name}`
+                    : "⏸️ Paused"}
+                </span>
+              </NowPlaying>
+            </>
+          )}
+        </Box>
+      )}
+    </AnimatePresence>
+  </Wrapper>
+);
 };
 
 export default SoundBar;
