@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Sidebar from "./Sidebar.js";
-import Footer from "./Footer.js";
-import Navbar from "./Navbar.js";
+import Sidebar from "./Sidebar";
+import Footer from "./Footer";
+import Navbar from "./Navbar";
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -24,7 +24,7 @@ const SidebarContainer = styled.div`
   @media (max-width: 768px) {
     position: fixed;
     top: 0;
-    left: ${({ open }) => (open ? "0" : "-260px")};
+    left: ${({ open }) => (open ? "0" : "-250px")};
     height: 100vh;
     width: 250px;
     background: #1a1a1b;
@@ -33,6 +33,7 @@ const SidebarContainer = styled.div`
   }
 
   @media (min-width: 769px) {
+    position: static;
     width: 250px;
     border-right: 1px solid #343536;
   }
@@ -72,13 +73,17 @@ const Layout = ({ children }) => {
   return (
     <LayoutWrapper>
       <Navbar onToggleSidebar={toggleSidebar} />
+      
+      {/* Sidebar (placed outside ContentArea for clean separation) */}
+      <SidebarContainer open={sidebarOpen}>
+        <Sidebar open={sidebarOpen} onLinkClick={closeSidebar} />
+      </SidebarContainer>
+      <Overlay open={sidebarOpen} onClick={closeSidebar} />
+
       <ContentArea>
-        <SidebarContainer open={sidebarOpen}>
-          <Sidebar onLinkClick={closeSidebar} />
-        </SidebarContainer>
-        <Overlay open={sidebarOpen} onClick={closeSidebar} />
         <MainContent>{children}</MainContent>
       </ContentArea>
+
       <Footer />
     </LayoutWrapper>
   );
