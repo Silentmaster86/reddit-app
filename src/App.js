@@ -8,13 +8,14 @@ import { SoundBarProvider } from "./context/SoundBarContext.js";
 import { fetchPosts } from "./features/posts/postsSlice.js";
 import AuthObserver from "./features/auth/Authobserver.js";
 import AppRoutes from "./routes/AppRoutes.js";
-import Navbar from "./components/Layout/Navbar.js";
 import SoundBar from "./components/Layout/SoundBar.js";
+import Layout from "./components/Layout/Layout.js"; // ✅ use this
+
 import "./styles/App.css";
 
 const AppContent = () => {
   const dispatch = useDispatch();
-  const { theme } = useTheme(); // from ThemeContext
+  const { theme } = useTheme();
 
   useEffect(() => {
     dispatch(fetchPosts());
@@ -24,9 +25,10 @@ const AppContent = () => {
     <StyledThemeProvider theme={theme}>
       <Router>
         <AuthObserver />
-        <Navbar />
         <SoundBar />
-        <AppRoutes />
+        <Layout>
+          <AppRoutes />
+        </Layout>
       </Router>
     </StyledThemeProvider>
   );
@@ -34,10 +36,10 @@ const AppContent = () => {
 
 export default function App() {
   return (
-<ThemeProvider>
-  <SoundBarProvider>
-    <AppContent />
-  </SoundBarProvider>
-</ThemeProvider>
+    <ThemeProvider>
+      <SoundBarProvider>
+        <AppContent />
+      </SoundBarProvider>
+    </ThemeProvider>
   );
 }
