@@ -34,7 +34,7 @@ const stations = [
 },
   {
   name: "RMF MAXX",
-  url: "http://195.150.20.7/rmf_maxxx",
+  url: "https://rs201-krk.rmfstream.pl/rmf_maxxx",
   logo: "https://streamurl.link/images/broadcasts/a977cab.webp",
 },
   {
