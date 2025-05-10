@@ -46,6 +46,16 @@ const stations = [
     name: "BBC Radio 1",
     url: "https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/cfs/bbc_radio_one.mpd",
     logo: "https://i.pinimg.com/736x/e9/2f/91/e92f916125a9f0d9494e4590349852ce.jpg",
+  },
+  {
+    name: "PRL",
+    url: "https://stream.rcs.revma.com/prfmwmwy768uv",
+    logo: "https://media.info/l/f/7/771.1428765955.png",
+  },
+  {
+    name: "Radio Bielsko",
+    url: "https://stream.rcs.revma.com/062uq3z3kwzuv",
+    logo: "https://www.radiobielsko.pl/player/assets/image/rb.png",
   }
 ];
 
