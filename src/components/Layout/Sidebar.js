@@ -3,14 +3,19 @@ import styled from "styled-components";
 import SubredditList from "../../features/posts/SubredditList.js";
 
 const SidebarContainer = styled.aside`
-  width: 300px;
-  min-width: 250px;
+  width: 250px;
   background-color: #f6f7f8;
   border-right: 1px solid #ddd;
   min-height: 100vh;
   padding: 1.5rem 1rem;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    border-right: none;
+    padding: 1rem;
+  }
 `;
 
 const SidebarHeader = styled.h2`
@@ -20,11 +25,11 @@ const SidebarHeader = styled.h2`
   margin-bottom: 1.5rem;
 `;
 
-const Sidebar = () => {
+const Sidebar = ({ onLinkClick }) => {
   return (
     <SidebarContainer>
       <SidebarHeader>Subreddits</SidebarHeader>
-      <SubredditList />
+      <SubredditList onItemClick={onLinkClick} />
     </SidebarContainer>
   );
 };
