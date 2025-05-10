@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import SignOut from "../../features/auth/SignOut.js";
 import ThemeSwitcher from "../Shared/ThemeSwitcher.js";
 import { useTheme } from "../../context/ThemeContext.js";
-import { useSoundBarToggle } from "../../context/SoundBarContext.js";
+import useSoundBarToggle from "../../context/SoundBarContext.js";
 import { FaMusic } from "react-icons/fa";
 
 const Nav = styled.nav`
