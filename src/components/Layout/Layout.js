@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Sidebar from "./Sidebar";
-import Footer from "./Footer";
-import Navbar from "./Navbar";
+import Sidebar from "./Sidebar.js";
+import Footer from "./Footer.js";
+import Navbar from "./Navbar.js";
 
 const LayoutWrapper = styled.div`
   display: flex;
