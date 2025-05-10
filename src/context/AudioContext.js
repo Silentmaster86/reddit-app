@@ -3,6 +3,14 @@ import React, { createContext, useContext, useRef, useState, useEffect } from "r
 
 const stations = [
   {
+    name: "Radio stations - UK",
+  },
+  {
+    name: "BBC Radio 1",
+    url: "https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/cfs/bbc_radio_one.mpd",
+    logo: "https://i.pinimg.com/736x/e9/2f/91/e92f916125a9f0d9494e4590349852ce.jpg",
+  },
+  {
     name: "Capital Dance",
     url: "https://media-ice.musicradio.com/CapitalDance",
     logo: "https://kuasark.com/files/stations-logos/capital-dance.png",
@@ -18,34 +26,22 @@ const stations = [
     logo: "https://p1mediagroup.com/wp-content/uploads/2016/11/Heart259x259.png",
   },
   {
-    name: "RADIOx 90s",
-    url: "https://media-ice.musicradio.com/RadioX90s",
-    logo: "https://radiotoday.co.uk/wp-content/uploads/2025/02/radiox90s.jpg",
-  },
-{
-  name: "RMF FM",
-  url: "https://195.150.20.244/rmf_fm",
-  logo: "https://i.ibb.co/PWRKNLz/rmf-logo.png",
-},
-{
-  name: "Radio Eska",
-  url: "https://ic1.smcdn.pl/2330-1.mp3",
-  logo: "https://streamurl.link/images/broadcasts/701188e.webp",
-},
-  {
-  name: "RMF MAXX",
-  url: "https://rs201-krk.rmfstream.pl/rmf_maxxx",
-  logo: "https://streamurl.link/images/broadcasts/a977cab.webp",
-},
-  {
     name: "KISS FM",
     url: "https://edge-bauerall-01-gos2.sharp-stream.com/kissnational.aac",
     logo: "https://media.bauerradio.com/image/upload/c_crop,g_custom/v1730224745/brand_manager/stations/gu7xhzpsjio7ga82trp2.png",
   },
   {
-    name: "BBC Radio 1",
-    url: "https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/cfs/bbc_radio_one.mpd",
-    logo: "https://i.pinimg.com/736x/e9/2f/91/e92f916125a9f0d9494e4590349852ce.jpg",
+    name: "RADIOx 90s",
+    url: "https://media-ice.musicradio.com/RadioX90s",
+    logo: "https://radiotoday.co.uk/wp-content/uploads/2025/02/radiox90s.jpg",
+  },
+    {
+    name: "Radio stations - PL",    
+    },
+  {
+    name: "PR Chicago",
+    url: "https://s1.reliastream.com/proxy/polskieradio?mp=/stream",
+    logo: "https://polskieradio.com/wp-content/themes/PRCTheme/assets/images/logo.png",
   },
   {
     name: "PRL",
@@ -56,6 +52,21 @@ const stations = [
     name: "Radio Bielsko",
     url: "https://stream.rcs.revma.com/062uq3z3kwzuv",
     logo: "https://www.radiobielsko.pl/player/assets/image/rb.png",
+  },
+  {
+    name: "Radio Eska",
+    url: "https://ic1.smcdn.pl/2330-1.mp3",
+    logo: "https://streamurl.link/images/broadcasts/701188e.webp",
+  },
+  {
+    name: "RMF FM",
+    url: "https://195.150.20.244/rmf_fm",
+    logo: "https://i.ibb.co/PWRKNLz/rmf-logo.png",
+  },
+  {
+    name: "RMF MAXX",
+    url: "https://rs201-krk.rmfstream.pl/rmf_maxxx",
+    logo: "https://streamurl.link/images/broadcasts/a977cab.webp",
   }
 ];
 
