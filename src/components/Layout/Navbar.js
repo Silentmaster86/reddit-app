@@ -93,19 +93,19 @@ const Navbar = () => {
         <Logo to="/">RedditClone</Logo>
 
         <button
-  onClick={toggleVisible}
-  style={{
-    background: "transparent",
-    border: "none",
-    color: "#ff4500",
-    fontSize: "1.4rem",
-    cursor: "pointer",
-    marginLeft: "1rem"
-  }}
-  title={isCompact ? "Expand SoundBar" : "Collapse SoundBar"}
->
-  <span role="img" aria-label="Music">🎵</span>
-</button>
+          onClick={toggleVisible}
+          title="Toggle SoundBar"
+          style={{
+            background: "transparent",
+            border: "none",
+            color: "#ff4500",
+            fontSize: "1.4rem",
+            cursor: "pointer",
+            marginLeft: "1rem"
+          }}
+            title={isCompact ? "Expand SoundBar" : "Collapse SoundBar"}>
+            <span role="img" aria-label="Music">🎵</span>
+        </button>
 
     
         <Hamburger onClick={() => setMenuOpen((prev) => !prev)}>☰</Hamburger>
