@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
 import { ThemeProvider, useTheme } from "./context/ThemeContext.js";
+import { SoundBarProvider } from "./context/SoundBarContext.js";
 import { fetchPosts } from "./features/posts/postsSlice.js";
 import AuthObserver from "./features/auth/Authobserver.js";
 import AppRoutes from "./routes/AppRoutes.js";
@@ -33,8 +34,10 @@ const AppContent = () => {
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <AppContent />
-    </ThemeProvider>
+<ThemeProvider>
+  <SoundBarProvider>
+    <AppContent />
+  </SoundBarProvider>
+</ThemeProvider>
   );
 }
