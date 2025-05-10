@@ -1,8 +1,8 @@
-// src/components/Layout/Layout.js
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Sidebar from "./Sidebar.js";
 import Footer from "./Footer.js";
+import Navbar from "./Navbar.js";
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -14,21 +14,39 @@ const ContentArea = styled.div`
   display: flex;
   flex: 1;
   background-color: ${({ theme }) => theme.body || "#1a1a1b"};
-  margin-top: 1rem;
-  border-radius: 15px;
 
-    @media (max-width: 768px) {
+  @media (max-width: 768px) {
     flex-direction: column;
   }
 `;
 
-const SidebarWrapper = styled.aside`
-  padding: 1rem;
+const SidebarContainer = styled.div`
+  @media (max-width: 768px) {
+    position: fixed;
+    top: 0;
+    left: ${({ open }) => (open ? "0" : "-260px")};
+    height: 100vh;
+    width: 250px;
+    background: #1a1a1b;
+    z-index: 1001;
+    transition: left 0.3s ease;
+  }
 
-    @media (max-width: 768px) {
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid #343536;
+  @media (min-width: 769px) {
+    width: 250px;
+    border-right: 1px solid #343536;
+  }
+`;
+
+const Overlay = styled.div`
+  display: ${({ open }) => (open ? "block" : "none")};
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+
+  @media (min-width: 769px) {
+    display: none;
   }
 `;
 
@@ -40,18 +58,25 @@ const MainContent = styled.main`
   background-color: ${({ theme }) => theme.body};
   color: ${({ theme }) => theme.text};
 
-    @media (max-width: 768px) {
+  @media (max-width: 768px) {
     padding: 1rem;
   }
 `;
 
 const Layout = ({ children }) => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => setSidebarOpen((prev) => !prev);
+  const closeSidebar = () => setSidebarOpen(false);
+
   return (
     <LayoutWrapper>
+      <Navbar onToggleSidebar={toggleSidebar} />
       <ContentArea>
-        <SidebarWrapper>
-          <Sidebar />
-        </SidebarWrapper>
+        <SidebarContainer open={sidebarOpen}>
+          <Sidebar onLinkClick={closeSidebar} />
+        </SidebarContainer>
+        <Overlay open={sidebarOpen} onClick={closeSidebar} />
         <MainContent>{children}</MainContent>
       </ContentArea>
       <Footer />
