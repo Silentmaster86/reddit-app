@@ -1,97 +1,39 @@
 // src/features/posts/PostDetails.js
-
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { motion } from "framer-motion";
-import CommentsSection from "./CommentSection.js";
-import { useSelector } from "react-redux";
+import Spinner from "../../components/UI/Spinner";
 
 const Wrapper = styled.div`
-  margin-top: 2rem;
   padding: 2rem;
-  background: ${({ theme }) => theme.body};
-  color: ${({ theme }) => theme.text};
-  min-height: 100vh;
+  color: #d7dadc;
 `;
 
-const PostCardWrapper = styled.div`
-  background: ${({ theme }) => theme.card};
-  color: ${({ theme }) => theme.text};
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: rgb(0 0 0 / 54%) 0px 4px 8px;
-  margin-bottom: 2rem;
-`;
-
-const Title = styled.h1`
-  font-size: 2.2rem;
-  margin-bottom: 1rem;
-`;
-
-const Meta = styled.div`
-  font-size: 0.9rem;
-  color: ${({ theme }) => theme.textSecondary || "#888"};
-  margin-bottom: 1.5rem;
-`;
-
-const Content = styled.div`
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin-bottom: 2rem;
-`;
-
-const BackLink = styled(Link)`
-  color: ${({ theme }) => theme.link || "#0079d3"};
-  text-decoration: none;
-  font-weight: bold;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const CenteredMessage = styled.div`
-  text-align: center;
-  padding: 3rem 1rem;
-  color: ${({ error }) => (error ? "#ff4500" : "#ccc")};
-  font-size: 1.2rem;
-  font-weight: bold;
-`;
-
-const CommentsTitle = styled.h2`
+const PostTitle = styled.h2`
   font-size: 1.5rem;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  color: ${({ theme }) => theme.text};
-`;
-
-const RedditComment = styled.div`
-  background: ${({ theme }) => theme.body};
-  color: ${({ theme }) => theme.text};
-  padding: 1rem;
-  border-radius: 12px;
-  margin-bottom: 1rem;
-  box-shadow: rgb(0 0 0 / 54%) 0px 4px 8px;
-`;
-
-const Author = styled.div`
-  font-weight: bold;
   margin-bottom: 0.5rem;
-  color: #ffb000;
 `;
 
-const Body = styled.p`
-  margin: 0;
-`;
-
-const SortSelect = styled.select`
+const PostMeta = styled.p`
+  font-size: 0.9rem;
+  color: #888;
   margin-bottom: 1rem;
-  background: #272729;
-  color: white;
-  border: 1px solid #343536;
-  padding: 0.5rem;
-  border-radius: 4px;
+`;
+
+const Thumbnail = styled.img`
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+`;
+
+const CommentsSection = styled.div`
+  margin-top: 2rem;
+`;
+
+const Comment = styled.div`
+  border-left: 2px solid #ff4500;
+  padding-left: 1rem;
+  margin-bottom: 1rem;
 `;
 
 const PostDetails = () => {
@@ -99,83 +41,57 @@ const PostDetails = () => {
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [sort, setSort] = useState("top");
-
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPostAndComments = async () => {
+      setLoading(true);
       try {
-        const response = await fetch(`https://www.reddit.com/comments/${postId}.json?sort=${sort}`);
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        const res = await fetch(`https://www.reddit.com/comments/${postId}.json`);
+        const json = await res.json();
 
-        const data = await response.json();
-        const postData = data[0]?.data?.children[0]?.data || null;
-        const commentsData = (data[1]?.data?.children || [])
-          .map((child) => child.data)
-          .filter((comment) => comment.body);
+        const postData = json[0].data.children[0].data;
+        const commentData = json[1].data.children.map(c => c.data);
 
         setPost(postData);
-        setComments(commentsData);
-        setLoading(false);
+        setComments(commentData);
+        setError(null);
       } catch (err) {
-        console.error("Failed to load post:", err);
-        setError("Failed to load post details.");
+        console.error("Failed to load post details", err);
+        setError("Failed to load post");
+      } finally {
         setLoading(false);
       }
     };
 
     fetchPostAndComments();
-  }, [postId, sort]);
+  }, [postId]);
 
-  if (loading) return <CenteredMessage>Loading post details...</CenteredMessage>;
-  if (error) return <CenteredMessage error>{error}</CenteredMessage>;
-  if (!post) return <CenteredMessage error>Post not found.</CenteredMessage>;
+  if (loading) return <Spinner />;
+  if (error) return <Wrapper><p>{error}</p></Wrapper>;
+  if (!post) return <Wrapper><p>Post not found.</p></Wrapper>;
 
   return (
     <Wrapper>
-      <motion.div
-        initial={{ opacity: 0, y: -30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <PostCardWrapper>
-          <Title>{post.title}</Title>
-          <Meta>
-            Posted by <strong>u/{post.author}</strong> in <strong>r/{post.subreddit}</strong> · {" "}
-            {new Date(post.created_utc * 1000).toLocaleDateString()}
-          </Meta>
-          <Content>{post.selftext || "No content available."}</Content>
-        </PostCardWrapper>
+      <PostTitle>{post.title}</PostTitle>
+      <PostMeta>Posted by u/{post.author}</PostMeta>
 
-        <CommentsTitle>Reddit Comments ({comments.length})</CommentsTitle>
-        <SortSelect value={sort} onChange={(e) => setSort(e.target.value)}>
-          <option value="top">Top</option>
-          <option value="new">New</option>
-          <option value="best">Best</option>
-        </SortSelect>
+      {post.preview?.images?.[0]?.source?.url && (
+        <Thumbnail src={post.preview.images[0].source.url.replace(/&amp;/g, "&")} alt="preview" />
+      )}
 
-        {comments.length === 0 ? (
-          <p>No comments found.</p>
-        ) : (
-          comments.map((comment) => (
-            <RedditComment key={comment.id}>
-              <Author>u/{comment.author}</Author>
-              <Body>{comment.body}</Body>
-            </RedditComment>
-          ))
-        )}
+      {post.selftext && <p>{post.selftext}</p>}
 
-        {isAuthenticated && (
-          <>
-            <CommentsTitle>Your Comments</CommentsTitle>
-            <CommentsSection postId={postId} />
-          </>
-        )}
-
-        <BackLink to="/">← Back to Home</BackLink>
-      </motion.div>
+      <CommentsSection>
+        <h3>Comments</h3>
+        {comments.length === 0 && <p>No comments yet.</p>}
+        {comments.map((comment) => (
+          <Comment key={comment.id}>
+            <p><strong>u/{comment.author}</strong></p>
+            <p>{comment.body}</p>
+          </Comment>
+        ))}
+      </CommentsSection>
     </Wrapper>
   );
 };
