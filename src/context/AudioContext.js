@@ -28,32 +28,25 @@ const stations = [
   logo: "https://i.ibb.co/PWRKNLz/rmf-logo.png",
 },
 {
-  name: "Radio ZET",
-  url: "https://zet090-01.cdn.eurozet.pl:8443/zet.aac",
-  logo: "https://upload.wikimedia.org/wikipedia/commons/0/06/Radio_ZET_logo.svg",
-},
-{
-  name: "Polskie Radio Trójka",
-  url: "https://stream3.polskieradio.pl/program3",
-  logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Logo_Tr%C3%B3jka_Polskie_Radio.svg/512px-Logo_Tr%C3%B3jka_Polskie_Radio.svg.png",
-},
-{
   name: "Radio Eska",
-  url: "https://stream3.eskago.pl/1_eska_mp3",
-  logo: "https://i.ibb.co/hKXc5cD/eska.png",
+  url: "https://ic1.smcdn.pl/2330-1.mp3",
+  logo: "https://streamurl.link/images/broadcasts/701188e.webp",
 },
-{
-  name: "Radio 357",
-  url: "https://stream.rcs.pl/357",
-  logo: "https://radio357.pl/favicon/android-chrome-192x192.png",
+  {
+  name: "RMF MAXX",
+  url: "http://195.150.20.7/rmf_maxxx",
+  logo: "https://streamurl.link/images/broadcasts/a977cab.webp",
 },
-{
-  name: "Radio Nowy Świat",
-  url: "https://stream.rcs.pl/rns",
-  logo: "https://radionowyswiat.pl/assets/img/logo.png",
-},
-
-  
+  {
+    name: "KISS FM",
+    url: "https://edge-bauerall-01-gos2.sharp-stream.com/kissnational.aac",
+    logo: "https://media.bauerradio.com/image/upload/c_crop,g_custom/v1730224745/brand_manager/stations/gu7xhzpsjio7ga82trp2.png",
+  },
+  {
+    name: "BBC Radio 1",
+    url: "https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/nonuk/pc_hd_abr_v2/cfs/bbc_radio_one.mpd",
+    logo: "https://i.pinimg.com/736x/e9/2f/91/e92f916125a9f0d9494e4590349852ce.jpg",
+  }
 ];
 
 const AudioContext = createContext();
