@@ -21,6 +21,8 @@ const ContentArea = styled.div`
 `;
 
 const SidebarContainer = styled.div`
+  width: 250px;
+
   @media (max-width: 768px) {
     position: fixed;
     top: 0;
@@ -34,7 +36,6 @@ const SidebarContainer = styled.div`
 
   @media (min-width: 769px) {
     position: static;
-    width: 250px;
     border-right: 1px solid #343536;
   }
 `;
@@ -71,19 +72,18 @@ const Layout = ({ children }) => {
   const closeSidebar = () => setSidebarOpen(false);
 
   return (
-
     <LayoutWrapper>
       <Navbar onToggleSidebar={toggleSidebar} />
-      
-      {/* Sidebar (placed outside ContentArea for clean separation) */}
-      <SidebarContainer open={sidebarOpen}>
-        <Sidebar open={sidebarOpen} onLinkClick={closeSidebar} />
-      </SidebarContainer>
+
+      {/* Overlay (mobile only) */}
       <Overlay open={sidebarOpen} onClick={closeSidebar} />
 
-
-
+      {/* Content area with sidebar and main */}
       <ContentArea>
+        <SidebarContainer open={sidebarOpen}>
+          <Sidebar open={sidebarOpen} onLinkClick={closeSidebar} />
+        </SidebarContainer>
+
         <MainContent>{children}</MainContent>
       </ContentArea>
 
