@@ -57,19 +57,6 @@ const Sidebar = ({ onLinkClick, open }) => {
     <SidebarContainer ref={sidebarRef}>
       <SidebarHeader>Subreddits</SidebarHeader>
       <SubredditList onItemClick={onLinkClick} />
-
-      <FooterSection>
-        <ThemeSwitcher toggleTheme={toggleTheme} currentTheme={themeName} />
-
-        {isAuthenticated && provider === "reddit" && user?.avatar && (
-          <UserInfo>
-            <Avatar src={user.avatar} alt="avatar" />
-            <span>{user.name}</span>
-          </UserInfo>
-        )}
-
-        {isAuthenticated && <SignOut />}
-      </FooterSection>
     </SidebarContainer>
   );
 };
