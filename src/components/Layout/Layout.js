@@ -80,7 +80,7 @@ const Layout = ({ children }) => {
 
       {/* Content area with sidebar and main */}
       <ContentArea>
-        <SidebarContainer open={sidebarOpen}>
+        <SidebarContainer>
           <Sidebar open={sidebarOpen} onLinkClick={closeSidebar} />
         </SidebarContainer>
 
