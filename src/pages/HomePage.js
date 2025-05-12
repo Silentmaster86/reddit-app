@@ -1,4 +1,5 @@
-// src/pages/HomePage.js import React, { useEffect, useRef } from "react"; import { useDispatch, useSelector } from "react-redux"; import styled, { keyframes } from "styled-components"; import { fetchPosts } from "../features/posts/postsSlice.js"; import { Link } from "react-router-dom"; import Spinner from "../components/UI/Spinner.js";
+// src/pages/HomePage.js
+import React, { useEffect, useRef } from "react"; import { useDispatch, useSelector } from "react-redux"; import styled, { keyframes } from "styled-components"; import { fetchPosts } from "../features/posts/postsSlice.js"; import { Link } from "react-router-dom"; import Spinner from "../components/UI/Spinner.js";
 
 const fadeInHighlight = keyframesfrom { background-color: #fffbdd; } to { background-color: transparent; };
 
