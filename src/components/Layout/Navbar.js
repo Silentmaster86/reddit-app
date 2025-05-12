@@ -1,30 +1,24 @@
-import React, { useState } from "react";
+// src/components/Layout/Navbar.js
+import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import SignOut from "../../features/auth/SignOut.js";
 import ThemeSwitcher from "../Shared/ThemeSwitcher.js";
 import { useTheme } from "../../context/ThemeContext.js";
-import { useSoundBarToggle } from "../../context/SoundBarContext.js";
 
 const Nav = styled.nav`
   background: #ffffff;
   padding: 1rem 2rem;
-  border-bottom: 2px solid #ff4500;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-
-  @media (max-width: 768px) {
-    padding: 1rem;
-  }
-`;
-
-const NavHeader = styled.div`
+  border-bottom: 2px solid #ff4500; /* 🔥 Orange Reddit border */
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 `;
+
 
 const Logo = styled(Link)`
   font-size: 1.7rem;
@@ -33,46 +27,67 @@ const Logo = styled(Link)`
   text-decoration: none;
 `;
 
-const Hamburger = styled.button`
-  display: none;
-  font-size: 1.5rem;
-  background: none;
-  border: none;
-  cursor: pointer;
+const NavLinks = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+`;
 
-  @media (max-width: 768px) {
-    display: block;
+const NavLink = styled(Link)`
+  text-decoration: none;
+  color: #333;
+  font-weight: 700;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #ff4500;
   }
 `;
 
-const Navbar = ({ onToggleSidebar }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
+const Avatar = styled.img`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+`;
+
+const UserInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+const { toggleTheme, themeName } = useTheme();
+
+const Navbar = () => {
   const { isAuthenticated, user, provider } = useSelector((state) => state.auth);
-  const { toggleTheme, themeName } = useTheme();
-  const { toggleVisible } = useSoundBarToggle();
 
   return (
+    <ThemeSwitcher toggleTheme={toggleTheme} currentTheme={themeName} />
     <Nav>
-      <NavHeader>
-        <Hamburger onClick={onToggleSidebar}>☰</Hamburger>
-    
-        <Logo to="/">RedditClone</Logo>
+      <Logo to="/">RedditClone</Logo>
+      <NavLinks>
+        <NavLink to="/">Home</NavLink>
 
-        <button
-          onClick={toggleVisible}
-          title="Toggle SoundBar"
-          style={{
-            background: "transparent",
-            border: "none",
-            color: "#ff4500",
-            fontSize: "1.4rem",
-            cursor: "pointer",
-            marginLeft: "1rem"
-          }}
-          >
-            <span role="img" aria-label="Music">🎵</span>
-        </button>
-      </NavHeader>
+{isAuthenticated ? (
+  <>
+    <NavLink to="/profile">Profile</NavLink>
+
+    <SignOut /> {/* ✅ use the real logout button here */}
+
+    {provider === "reddit" && user?.avatar && (
+      <UserInfo>
+        <Avatar src={user.avatar} alt="avatar" />
+        <span>{user.name}</span>
+      </UserInfo>
+    )}
+  </>
+) : (
+  <>
+    <NavLink to="/signin">Sign In</NavLink>
+    <NavLink to="/signup">Sign Up</NavLink>
+  </>
+)}
+      </NavLinks>
     </Nav>
   );
 };
