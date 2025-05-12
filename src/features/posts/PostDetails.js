@@ -9,6 +9,19 @@ const Wrapper = styled.div`
   color: #d7dadc;
 `;
 
+const BackLink = styled(Link)`
+  font-size: 0.85rem;
+  color: #818384;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 1rem;
+
+  &:hover {
+    text-decoration: underline;
+    color: #d7dadc;
+  }
+`;
+
 const PostTitle = styled.h2`
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
@@ -81,9 +94,8 @@ const PostDetails = () => {
       )}
 
       {post.selftext && <p>{post.selftext}</p>}
-      <Link to="/" style={{ color: "#ff4500", fontWeight: "bold", marginBottom: "1rem", display: "inline-block" }}>
-        ← Back to Posts
-      </Link>
+      <BackLink to="/">← Back to Posts</BackLink>
+
       <CommentsSection>
         <h3>Comments</h3>
         {comments.length === 0 && <p>No comments yet.</p>}
@@ -94,9 +106,8 @@ const PostDetails = () => {
           </Comment>
         ))}
       </CommentsSection>
-        <Link to="/" style={{ color: "#ff4500", fontWeight: "bold", marginBottom: "1rem", display: "inline-block" }}>
-        ← Back to Posts
-        </Link>
+        <BackLink to="/">← Back to Posts</BackLink>
+
     </Wrapper>
   );
 };
