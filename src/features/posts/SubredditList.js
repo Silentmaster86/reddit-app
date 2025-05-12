@@ -10,6 +10,14 @@ const Wrapper = styled.div`
   background-color: #404040;
   color: #fff;
   border-radius: 8px;
+
+  @media (max-width: 768px) {
+    padding: 0.75rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.5rem;
+  }
 `;
 
 const Title = styled.h2`
@@ -17,6 +25,11 @@ const Title = styled.h2`
   margin-bottom: 1rem;
   border-bottom: 1px solid #333;
   padding-bottom: 0.5rem;
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
 `;
 
 const SearchInput = styled.input`
@@ -27,10 +40,16 @@ const SearchInput = styled.input`
   border: 1px solid #343536;
   color: #d7dadc;
   border-radius: 4px;
+  font-size: 1rem;
 
   &:focus {
     outline: none;
     border-color: #0079d3;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.4rem;
+    font-size: 0.9rem;
   }
 `;
 
@@ -46,7 +65,7 @@ const List = styled.ul`
 const ListItem = styled.li`
   display: flex;
   align-items: center;
-  padding: 0.6rem 0;
+  padding: 0.5rem 0;
   cursor: pointer;
   border-radius: 6px;
   transition: background 0.2s ease;
@@ -55,20 +74,35 @@ const ListItem = styled.li`
   &:hover {
     background: #343536;
   }
+
+  @media (max-width: 480px) {
+    padding: 0.4rem 0;
+  }
 `;
 
 const Icon = styled.img`
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   object-fit: cover;
   border-radius: 50%;
-  margin-right: 0.75rem;
+  margin-right: 0.6rem;
   background: #fff;
+
+  @media (max-width: 480px) {
+    width: 24px;
+    height: 24px;
+    margin-right: 0.5rem;
+  }
 `;
 
 const SubredditName = styled.span`
   font-weight: bold;
   color: #d7dadc;
+  font-size: 1rem;
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const fallbackIcon = "https://www.redditstatic.com/icon.png";
