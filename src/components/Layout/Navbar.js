@@ -106,7 +106,7 @@ const Navbar = ({ onToggleSidebar }) => {
             cursor: "pointer",
             marginLeft: "1rem"
           }}
-
+          >
             <span role="img" aria-label="Music">🎵</span>
         </button>
       </NavHeader>
