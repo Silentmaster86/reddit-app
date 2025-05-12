@@ -3,18 +3,26 @@ import LikeButton from '../../components/userItems/LikeButton.js';
 import styled from 'styled-components';
 
 const Card = styled.div`
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  transition: transform 0.2s;
+  background: #1a1a1b;
+  border: 1px solid #343536;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  transition: background 0.2s;
+  font-size: 1rem;
 
   &:hover {
-    transform: translateY(-4px);
+    background: #2a2a2b;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.7rem;
+    font-size: 0.9rem;
   }
 `;
 
