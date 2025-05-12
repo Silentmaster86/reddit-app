@@ -1,6 +1,6 @@
 // src/features/posts/PostDetails.js
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 import Spinner from "../../components/UI/Spinner.js";
 
@@ -81,7 +81,9 @@ const PostDetails = () => {
       )}
 
       {post.selftext && <p>{post.selftext}</p>}
-
+      <Link to="/" style={{ color: "#ff4500", fontWeight: "bold", marginBottom: "1rem", display: "inline-block" }}>
+        ← Back to Posts
+      </Link>
       <CommentsSection>
         <h3>Comments</h3>
         {comments.length === 0 && <p>No comments yet.</p>}
@@ -92,6 +94,9 @@ const PostDetails = () => {
           </Comment>
         ))}
       </CommentsSection>
+        <Link to="/" style={{ color: "#ff4500", fontWeight: "bold", marginBottom: "1rem", display: "inline-block" }}>
+        ← Back to Posts
+        </Link>
     </Wrapper>
   );
 };
