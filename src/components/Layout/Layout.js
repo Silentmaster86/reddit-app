@@ -21,14 +21,13 @@ const ContentArea = styled.div`
 `;
 
 const SidebarContainer = styled.div`
-  width: 250px;
+  width: 300px;
 
   @media (max-width: 768px) {
     position: fixed;
     top: 0;
     left: ${({ open }) => (open ? "0" : "-250px")};
     height: 100vh;
-    width: 250px;
     background: #1a1a1b;
     z-index: 1001;
     transition: left 0.3s ease;
@@ -36,7 +35,6 @@ const SidebarContainer = styled.div`
 
   @media (min-width: 769px) {
     position: static;
-    width: 300px;
   }
 `;
 
@@ -67,7 +65,6 @@ const MainContent = styled.main`
 
 const Layout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
   const closeSidebar = () => setSidebarOpen(false);
 
