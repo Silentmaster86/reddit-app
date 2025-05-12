@@ -73,7 +73,7 @@ const Layout = ({ children }) => {
 
   return (
     <LayoutWrapper>
-      <Navbar/>
+      <Navbar onToggleSidebar={toggleSidebar}/>
 
       {/* Overlay (mobile only) */}
       <Overlay open={sidebarOpen} onClick={closeSidebar} />
