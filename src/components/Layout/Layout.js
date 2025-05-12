@@ -76,6 +76,7 @@ const Layout = ({ children }) => {
       <Navbar onToggleSidebar={toggleSidebar}/>
 
 
+      <ContentArea>
       {/* Content area with sidebar and main */}
         <SidebarContainer>
           <Sidebar open={sidebarOpen} onLinkClick={closeSidebar} />
@@ -83,7 +84,6 @@ const Layout = ({ children }) => {
       {/* Overlay (mobile only) */}
       <Overlay open={sidebarOpen} onClick={closeSidebar} />
 
-      <ContentArea>
         <MainContent>{children}</MainContent>
       </ContentArea>
 
