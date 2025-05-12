@@ -36,7 +36,7 @@ const SidebarContainer = styled.div`
 
   @media (min-width: 769px) {
     position: static;
-    border-right: 1px solid #343536;
+    width: 250px;
   }
 `;
 
