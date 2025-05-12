@@ -26,9 +26,7 @@ const AppContent = () => {
       <Router>
         <AuthObserver />
         <SoundBar />
-        <Layout>
           <AppRoutes />
-        </Layout>
       </Router>
     </StyledThemeProvider>
   );
