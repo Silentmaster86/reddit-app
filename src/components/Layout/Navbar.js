@@ -90,6 +90,20 @@ const Navbar = () => {
       <NavHeader>
         <Logo to="/">RedditClone</Logo>
         <Hamburger onClick={() => setMenuOpen((prev) => !prev)}>☰</Hamburger>
+      <button
+          onClick={toggleVisible}
+          title="Toggle SoundBar"
+          style={{
+            background: "transparent",
+            border: "none",
+            color: "#ff4500",
+            fontSize: "1.4rem",
+            cursor: "pointer",
+            marginLeft: "1rem"
+          }}
+
+            <span role="img" aria-label="Music">🎵</span>
+        </button>
       </NavHeader>
 
       <NavLinks open={menuOpen}>
