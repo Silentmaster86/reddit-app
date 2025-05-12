@@ -1,14 +1,32 @@
 // src/pages/HomePage.js
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { fetchPosts } from "../features/posts/postsSlice.js";
 import { Link } from "react-router-dom";
 import Spinner from "../components/UI/Spinner.js";
 
+// Fade animation for post list
+const fadeInHighlight = keyframes`
+  from {
+    background-color: #fffbdd;
+  }
+  to {
+    background-color: transparent;
+  }
+`;
+
 const Wrapper = styled.div`
   padding: 2rem;
   color: rgb(151, 155, 155);
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+`;
+
+const AnimatedListWrapper = styled.div`
+  animation: ${fadeInHighlight} 1.5s ease;
 `;
 
 const PostCard = styled.div`
@@ -26,12 +44,17 @@ const PostCard = styled.div`
 const HomePage = () => {
   const dispatch = useDispatch();
   const { posts, status } = useSelector((state) => state.posts);
-  const postListRef = useRef(null);
   const selectedSubreddit = useSelector((state) => state.posts.selectedSubreddit);
+  const postListRef = useRef(null);
 
-useEffect(() => {
-  dispatch(fetchPosts(selectedSubreddit));
-}, [dispatch, selectedSubreddit]);
+  useEffect(() => {
+    dispatch(fetchPosts(selectedSubreddit));
+
+    // Scroll to top of post list
+    if (postListRef.current) {
+      postListRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [dispatch, selectedSubreddit]);
 
   return (
     <Wrapper>
@@ -40,7 +63,7 @@ useEffect(() => {
 
       {status === "loading" && <Spinner />}
       {status === "succeeded" && posts.length > 0 && (
-        <div>
+        <AnimatedListWrapper ref={postListRef}>
           {posts.slice(0, 5).map((post) => (
             <PostCard key={post.id}>
               <h3>{post.title}</h3>
@@ -48,7 +71,7 @@ useEffect(() => {
               <Link to={`/post/${post.id}`}>Read more</Link>
             </PostCard>
           ))}
-        </div>
+        </AnimatedListWrapper>
       )}
       {status === "failed" && <p>Failed to load posts. Please try again.</p>}
     </Wrapper>
