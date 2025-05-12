@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Sidebar from "./Sidebar.js";
 import Footer from "./Footer.js";
 import Navbar from "./Navbar.js";
+import useIsMobile from "../../hooks/useIsMobile.js";
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -63,27 +64,62 @@ const MainContent = styled.main`
   }
 `;
 
+
+const BottomBar = styled.div`
+  display: none;
+
+  @media (max-width: 768px) {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #1a1a1b;
+    padding: 0.75rem 1rem;
+    justify-content: center;
+    z-index: 1002;
+    border-top: 1px solid #343536;
+  }
+`;
+
+const BottomButton = styled.button`
+  background: none;
+  border: none;
+  color: #ff4500;
+  font-size: 1.5rem;
+  cursor: pointer;
+`;
+
 const Layout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
   const closeSidebar = () => setSidebarOpen(false);
-
+  const isMobile = useIsMobile();
+  
   return (
     <LayoutWrapper>
       <Navbar onToggleSidebar={toggleSidebar}/>
 
 
       <ContentArea>
-      {/* Content area with sidebar and main */}
-        <SidebarContainer>
+         {/* Sidebar (conditionally rendered) */}
+          {(!isMobile || sidebarOpen) && (
+          <SidebarContainer open={sidebarOpen}>
           <Sidebar open={sidebarOpen} onLinkClick={closeSidebar} />
-        </SidebarContainer>
+          </SidebarContainer>
+        )}
       {/* Overlay (mobile only) */}
       <Overlay open={sidebarOpen} onClick={closeSidebar} />
 
         <MainContent>{children}</MainContent>
       </ContentArea>
-
+      {/* Mobile bottom bar */}
+      <BottomBar>
+        <BottomButton onClick={toggleSidebar} title="Browse Subreddits">
+        🧭 Subreddits
+        </BottomButton>
+        </BottomBar>
+        
       <Footer />
     </LayoutWrapper>
   );
