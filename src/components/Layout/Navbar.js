@@ -81,17 +81,21 @@ const Avatar = styled.img`
   object-fit: cover;
 `;
 
-const Navbar = () => {
+const Navbar = ({ onToggleSidebar }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { isAuthenticated, user, provider } = useSelector((state) => state.auth);
   const { toggleTheme, themeName } = useTheme();
-
+  const { toggleVisible } = useSoundBarToggle();
+  
   return (
     <Nav>
       <NavHeader>
-        <Logo to="/">RedditClone</Logo>
+    
         <Hamburger onClick={() => setMenuOpen((prev) => !prev)}>☰</Hamburger>
-      <button
+    
+        <Logo to="/">RedditClone</Logo>
+    
+        <button
           onClick={toggleVisible}
           title="Toggle SoundBar"
           style={{
