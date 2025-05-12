@@ -1,5 +1,5 @@
 // src/pages/HomePage.js
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { fetchPosts } from "../features/posts/postsSlice.js";
@@ -26,8 +26,8 @@ const PostCard = styled.div`
 const HomePage = () => {
   const dispatch = useDispatch();
   const { posts, status } = useSelector((state) => state.posts);
-
-const selectedSubreddit = useSelector((state) => state.posts.selectedSubreddit);
+  const postListRef = useRef(null);
+  const selectedSubreddit = useSelector((state) => state.posts.selectedSubreddit);
 
 useEffect(() => {
   dispatch(fetchPosts(selectedSubreddit));
