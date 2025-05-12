@@ -65,7 +65,7 @@ const HomePage = () => {
       {status === "succeeded" && posts.length > 0 && (
         <AnimatedListWrapper ref={topRef}>
           {posts.slice(0, 10).map((post, index) => (
-            <PostCard key={post.id} ref={index === 0 ? postListRef : null}>
+            <PostCard key={post.id} ref={index === 0 ? topRef : null}>
               <h3>{post.title}</h3>
               <p>by u/{post.author}</p>
               <Link to={`/post/${post.id}`}>Read more</Link>
