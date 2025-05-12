@@ -6,14 +6,9 @@ import { fetchPosts } from "../features/posts/postsSlice.js";
 import { Link } from "react-router-dom";
 import Spinner from "../components/UI/Spinner.js";
 
-// Fade animation for post list
 const fadeInHighlight = keyframes`
-  from {
-    background-color: #fffbdd;
-  }
-  to {
-    background-color: transparent;
-  }
+  from { background-color: #fffbdd; }
+  to { background-color: transparent; }
 `;
 
 const Wrapper = styled.div`
@@ -36,9 +31,35 @@ const PostCard = styled.div`
   margin-bottom: 1rem;
   border-radius: 8px;
   transition: background 0.2s;
+
   &:hover {
     background: #2a2a2b;
   }
+
+  @media (max-width: 768px) {
+    padding: 0.9rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+`;
+
+const Title = styled.h3`
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+
+  @media (max-width: 480px) {
+    font-size: 1.1rem;
+  }
+`;
+
+const Meta = styled.p`
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  color: #888;
 `;
 
 const HomePage = () => {
@@ -49,11 +70,11 @@ const HomePage = () => {
 
   useEffect(() => {
     dispatch(fetchPosts(selectedSubreddit));
-
-  setTimeout(() => {
-    const offsetTop = topRef.current?.offsetTop || 0;
-    window.scrollTo({ top: offsetTop - 80, behavior: "auto" });
-  }, 0);
+    // Instantly scroll to top of posts (offset for navbar)
+    setTimeout(() => {
+      const offsetTop = topRef.current?.offsetTop || 0;
+      window.scrollTo({ top: offsetTop - 80, behavior: "auto" });
+    }, 0);
   }, [dispatch, selectedSubreddit]);
 
   return (
@@ -63,11 +84,11 @@ const HomePage = () => {
 
       {status === "loading" && <Spinner />}
       {status === "succeeded" && posts.length > 0 && (
-        <AnimatedListWrapper ref={topRef}>
-          {posts.slice(0, 10).map((post, index) => (
-            <PostCard key={post.id} ref={index === 0 ? topRef : null}>
-              <h3>{post.title}</h3>
-              <p>by u/{post.author}</p>
+        <AnimatedListWrapper>
+          {posts.slice(0, 10).map((post) => (
+            <PostCard key={post.id}>
+              <Title>{post.title}</Title>
+              <Meta>by u/{post.author}</Meta>
               <Link to={`/post/${post.id}`}>Read more</Link>
             </PostCard>
           ))}
