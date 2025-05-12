@@ -64,7 +64,7 @@ const HomePage = () => {
       {status === "loading" && <Spinner />}
       {status === "succeeded" && posts.length > 0 && (
         <AnimatedListWrapper ref={postListRef}>
-          {posts.slice(0, 10).map((post) => (
+          {posts.slice(0, 10).map((post, index) => (
             <PostCard key={post.id} ref={index === 0 ? postListRef : null}>
               <h3>{post.title}</h3>
               <p>by u/{post.author}</p>
