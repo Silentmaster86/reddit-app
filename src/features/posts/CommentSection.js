@@ -21,6 +21,11 @@ import LikeButton from "../../components/UI/LikeButton.js";
 
 const Wrapper = styled.div`
   margin-top: 2rem;
+  padding: 0 1rem;
+
+  @media (max-width: 480px) {
+    padding: 0 0.5rem;
+  }
 `;
 
 const CommentForm = styled.form`
@@ -37,7 +42,18 @@ const Textarea = styled.textarea`
   border-radius: 6px;
   resize: vertical;
   min-height: 100px;
+
+  @media (max-width: 768px) {
+    padding: 0.6rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
 `;
+
 
 const SubmitButton = styled.button`
   margin-top: 1rem;
@@ -65,7 +81,13 @@ const SingleComment = styled(motion.div)`
   border: 1px solid #343536;
   border-radius: 6px;
   margin-bottom: 1rem;
+
+  @media (max-width: 480px) {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
 `;
+
 
 const CommentAuthor = styled.div`
   font-weight: bold;
