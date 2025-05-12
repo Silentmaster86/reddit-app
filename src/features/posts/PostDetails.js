@@ -94,7 +94,14 @@ const PostDetails = () => {
       )}
 
       {post.selftext && <p>{post.selftext}</p>}
-      <BackLink to="/">← Back to Posts</BackLink>
+      <BackLink
+        to="/"
+        onClick={() => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }}
+        >
+        ← Back to Posts
+        </BackLink>
 
       <CommentsSection>
         <h3>Comments</h3>
@@ -106,7 +113,14 @@ const PostDetails = () => {
           </Comment>
         ))}
       </CommentsSection>
-        <BackLink to="/">← Back to Posts</BackLink>
+        <BackLink
+          to="/"
+          onClick={() => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          >
+          ← Back to Posts
+        </BackLink>
 
     </Wrapper>
   );
