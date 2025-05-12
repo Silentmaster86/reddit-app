@@ -45,19 +45,19 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const { posts, status } = useSelector((state) => state.posts);
   const selectedSubreddit = useSelector((state) => state.posts.selectedSubreddit);
-  const postListRef = useRef(null);
+  const topRef = useRef(null);
 
   useEffect(() => {
     dispatch(fetchPosts(selectedSubreddit));
 
-    // Scroll to top of post list
-    if (postListRef.current) {
-      postListRef.current.scrollIntoView({ behavior: "smooth" });
-    }
+  setTimeout(() => {
+    const offsetTop = topRef.current?.offsetTop || 0;
+    window.scrollTo({ top: offsetTop - 80, behavior: "auto" });
+  }, 0);
   }, [dispatch, selectedSubreddit]);
 
   return (
-    <Wrapper>
+    <Wrapper ref={topRef}>
       <h1>Welcome to Reddit Clone! 🎉</h1>
       <p>Explore trending posts. Sign in to vote, comment, or post your own.</p>
 
