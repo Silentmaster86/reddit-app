@@ -28,13 +28,25 @@ const Card = styled.div`
 
 const Title = styled.h2`
   font-size: 1.6rem;
-  color: #ffffff;
+  color: #fff;
   margin-bottom: 0.5rem;
+  word-break: break-word;
+
+  @media (max-width: 768px) {
+    font-size: 1.25rem;
+  }
 
   @media (max-width: 480px) {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
 `;
+
+const LikeRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 
 const Meta = styled.p`
   font-size: 0.9rem;
@@ -62,8 +74,11 @@ const PostCard = React.memo(({ post }) => {
     <Card>
       <Title>{post.title}</Title>
       <Meta>Posted by: {post.author}</Meta>
-      <Score>Score: {post.score}</Score>
-      <LikeButton itemId={post.id} itemType="posts" />
+      <LikeRow>
+        <Score>Score: {post.score}</Score>
+        <LikeButton itemId={post.id} itemType="posts" />
+      </LikeRow>
+
     </Card>
   );
 });
