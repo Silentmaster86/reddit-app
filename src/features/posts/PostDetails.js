@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Spinner from "../../components/UI/Spinner.js";
 import CommentSection from "./CommentSection.js";
@@ -82,6 +83,9 @@ const PostDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const provider = useSelector((state) => state.auth.provider);
+  const redditUser = useSelector((state) => state.auth.user);
+
   useEffect(() => {
     const fetchPostAndComments = async () => {
       setLoading(true);
@@ -104,7 +108,7 @@ const PostDetails = () => {
     };
 
     fetchPostAndComments();
-    window.scrollTo({ top: 0, behavior: "instant" }); // ⚡ scroll immediately on load
+    window.scrollTo({ top: 0, behavior: "instant" });
   }, [postId]);
 
   if (loading) return <Spinner />;
@@ -128,7 +132,34 @@ const PostDetails = () => {
       <BackLink to="/">← Back to Posts</BackLink>
 
       <CommentsSection>
-        <CommentSection postId={post.id} />
+        <h3>Comments</h3>
+
+        {provider === "reddit" && (
+          <>
+            {comments.length === 0 ? (
+              <p>No comments yet.</p>
+            ) : (
+              comments.map((comment) => (
+                <Comment key={comment.id}>
+                  <p><strong>u/{comment.author}</strong></p>
+                  <p>{comment.body}</p>
+                </Comment>
+              ))
+            )}
+            <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
+              ⚠️ Reddit comments are read-only here. You can post on reddit.com directly.
+            </p>
+          </>
+        )}
+
+        {provider === "firebase" && (
+          <>
+            <CommentSection postId={post.id} />
+            <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
+              💬 Comments are stored via Firebase.
+            </p>
+          </>
+        )}
       </CommentsSection>
     </Wrapper>
   );
