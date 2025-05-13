@@ -35,11 +35,23 @@ const PostCard = styled.div`
   margin-bottom: 1rem;
   border-radius: 8px;
   transition: background 0.2s;
+  display: block; // Ensure it's displayed
 
   &:hover {
     background: #2a2a2b;
   }
+
+  @media (max-width: 768px) {
+    padding: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.7rem;
+    font-size: 0.9rem;
+  }
 `;
+
 
 const Title = styled.h3`
   font-size: 1.2rem;
