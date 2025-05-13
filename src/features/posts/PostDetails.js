@@ -84,6 +84,7 @@ const PostDetails = () => {
   const [error, setError] = useState(null);
 
   const provider = useSelector((state) => state.auth.provider);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   useEffect(() => {
     const fetchPostAndComments = async () => {
@@ -133,31 +134,42 @@ const PostDetails = () => {
       <CommentsSection>
         <h3>Comments</h3>
 
-        {provider === "reddit" && (
+        {comments.length === 0 ? (
+          <p>No comments yet.</p>
+        ) : (
+          comments.map((comment) => (
+            <Comment key={comment.id}>
+              <p><strong>u/{comment.author}</strong></p>
+              <p>{comment.body}</p>
+            </Comment>
+          ))
+        )}
+
+        {isAuthenticated && (
           <>
-            {comments.length === 0 ? (
-              <p>No comments yet.</p>
-            ) : (
-              comments.map((comment) => (
-                <Comment key={comment.id}>
-                  <p><strong>u/{comment.author}</strong></p>
-                  <p>{comment.body}</p>
-                </Comment>
-              ))
+            {provider === "firebase" && (
+              <>
+                <CommentSection postId={post.name} />
+                <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
+                  💬 Comments are stored via Firebase.
+                </p>
+              </>
             )}
-            <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
-              ⚠️ Reddit comments are read-only here. You can post on reddit.com directly.
-            </p>
+            {provider === "reddit" && (
+              <>
+                <CommentSection postId={post.id} />
+                <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
+                  📝 Comment will be submitted to Reddit.
+                </p>
+              </>
+            )}
           </>
         )}
 
-        {provider === "firebase" && (
-          <>
-            <CommentSection postId={post.name} />
-            <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
-              💬 Comments are stored via Firebase.
-            </p>
-          </>
+        {!isAuthenticated && (
+          <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
+            🔒 Sign in to post a comment.
+          </p>
         )}
       </CommentsSection>
     </Wrapper>
