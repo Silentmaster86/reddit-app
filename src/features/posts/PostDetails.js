@@ -84,7 +84,6 @@ const PostDetails = () => {
   const [error, setError] = useState(null);
 
   const provider = useSelector((state) => state.auth.provider);
-  const redditUser = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     const fetchPostAndComments = async () => {
@@ -154,7 +153,7 @@ const PostDetails = () => {
 
         {provider === "firebase" && (
           <>
-            <CommentSection postId={post.id} />
+            <CommentSection postId={post.name} />
             <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
               💬 Comments are stored via Firebase.
             </p>
