@@ -128,17 +128,7 @@ const PostDetails = () => {
       <BackLink to="/">← Back to Posts</BackLink>
 
       <CommentsSection>
-        <h3>Comments</h3>
-        {comments.length === 0 ? (
-          <p>No comments yet.</p>
-        ) : (
-          comments.map((comment) => (
-            <Comment key={comment.id}>
-              <p><strong>u/{comment.author}</strong></p>
-              <p>{comment.body}</p>
-            </Comment>
-          ))
-        )}
+        <CommentSection postId={post.id} />
       </CommentsSection>
     </Wrapper>
   );
