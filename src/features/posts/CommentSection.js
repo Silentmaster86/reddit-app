@@ -1,8 +1,6 @@
-// src/features/posts/CommentSection.js
-
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { auth, db } from "../../firebase.js";
+import { db } from "../../firebase.js";
 import {
   collection,
   query,
@@ -43,16 +41,6 @@ const Textarea = styled.textarea`
   border-radius: 6px;
   resize: vertical;
   min-height: 100px;
-
-  @media (max-width: 768px) {
-    padding: 0.6rem;
-    font-size: 0.95rem;
-  }
-
-  @media (max-width: 480px) {
-    padding: 0.5rem;
-    font-size: 0.9rem;
-  }
 `;
 
 const SubmitButton = styled.button`
@@ -81,11 +69,6 @@ const SingleComment = styled(motion.div)`
   border: 1px solid #343536;
   border-radius: 6px;
   margin-bottom: 1rem;
-
-  @media (max-width: 480px) {
-    padding: 0.8rem;
-    font-size: 0.9rem;
-  }
 `;
 
 const CommentAuthor = styled.div`
@@ -141,7 +124,7 @@ const CommentSection = ({ postId }) => {
 
     if (provider === "reddit") {
       fetchRedditComments();
-    } else if (provider === "firebase") {
+    } else {
       const commentsQuery = query(
         collection(db, "comments"),
         where("postId", "==", postId)
@@ -201,8 +184,9 @@ const CommentSection = ({ postId }) => {
         const data = await response.json();
         if (data?.json?.errors?.length) throw new Error(data.json.errors[0][1]);
 
+        alert("✅ Comment posted to Reddit!");
         setNewComment("");
-        fetchRedditComments();
+        fetchRedditComments(); // Refresh to show the comment
       } catch (err) {
         console.error("❌ Reddit comment failed:", err);
         alert("Failed to post comment on Reddit.");
@@ -230,8 +214,9 @@ const CommentSection = ({ postId }) => {
   };
 
   const formatTimestamp = (timestamp) => {
-    if (!timestamp?.toDate) return "";
-    return timestamp.toDate().toLocaleString();
+    if (!timestamp) return "";
+    const date = timestamp.toDate();
+    return date.toLocaleString();
   };
 
   return (
@@ -247,7 +232,8 @@ const CommentSection = ({ postId }) => {
           <SubmitButton type="submit">Post Comment</SubmitButton>
         </CommentForm>
       )}
-<CommentList>
+
+      <CommentList>
         <AnimatePresence>
           {comments.map((comment) => {
             const isMyComment =
@@ -275,13 +261,16 @@ const CommentSection = ({ postId }) => {
                     />
                   )}
                 </CommentAuthor>
-              <CommentContent>{comment.content || comment.body}</CommentContent>
-              <CommentTime>
-                {comment.timestamp ? formatTimestamp(comment.timestamp) : ""}
-              </CommentTime>
-              {provider === "firebase" && <LikeButton itemId={comment.id} itemType="comments" />}
-            </SingleComment>
-          ))}
+                <CommentContent>{comment.content || comment.body}</CommentContent>
+                <CommentTime>
+                  {comment.timestamp ? formatTimestamp(comment.timestamp) : ""}
+                </CommentTime>
+                {provider === "firebase" && (
+                  <LikeButton itemId={comment.id} itemType="comments" />
+                )}
+              </SingleComment>
+            );
+          })}
         </AnimatePresence>
       </CommentList>
     </Wrapper>
