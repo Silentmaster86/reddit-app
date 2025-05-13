@@ -29,13 +29,13 @@ const AnimatedListWrapper = styled.div`
 `;
 
 const PostCard = styled.div`
+  display: flex
   background: #1a1a1b;
   border: 1px solid #343536;
   padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 8px;
   transition: background 0.2s;
-  display: block; // Ensure it's displayed
 
   &:hover {
     background: #2a2a2b;
@@ -79,7 +79,7 @@ const HomePage = () => {
     dispatch(fetchPosts(selectedSubreddit));
     setTimeout(() => {
       const offsetTop = topRef.current?.offsetTop || 0;
-      window.scrollTo({ top: offsetTop - 80, behavior: "auto" });
+      window.scrollTo({ top: offsetTop - 50, behavior: "auto" });
     }, 0);
   }, [dispatch, selectedSubreddit]);
 
