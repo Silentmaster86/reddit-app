@@ -247,30 +247,34 @@ const CommentSection = ({ postId }) => {
           <SubmitButton type="submit">Post Comment</SubmitButton>
         </CommentForm>
       )}
-
-      <CommentList>
+<CommentList>
         <AnimatePresence>
-          {comments.map((comment) => (
-            <SingleComment
-              key={comment.id}
-              variants={animationVariant}
-              custom={comment.id === justPostedId}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              layout
-            >
-              <CommentAuthor>
-                {comment.author?.username || comment.author || "Anonymous"}
-                {(comment.authorId === user?.uid || comment.author === redditUser?.name) && (
-                  <Trash2
-                    size={16}
-                    style={{ cursor: "pointer" }}
-                    title="Delete comment"
-                    onClick={() => handleDelete(comment.id)}
-                  />
-                )}
-              </CommentAuthor>
+          {comments.map((comment) => {
+            const isMyComment =
+              (provider === "firebase" && comment.authorId === user?.uid) ||
+              (provider === "reddit" && comment.author === redditUser?.name);
+
+            return (
+              <SingleComment
+                key={comment.id}
+                variants={animationVariant}
+                custom={comment.id === justPostedId}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                layout
+              >
+                <CommentAuthor>
+                  {comment.author?.username || comment.author || "Anonymous"}
+                  {isMyComment && (
+                    <Trash2
+                      size={16}
+                      style={{ cursor: "pointer" }}
+                      title="Delete comment"
+                      onClick={() => handleDelete(comment.id)}
+                    />
+                  )}
+                </CommentAuthor>
               <CommentContent>{comment.content || comment.body}</CommentContent>
               <CommentTime>
                 {comment.timestamp ? formatTimestamp(comment.timestamp) : ""}
