@@ -141,7 +141,7 @@ const CommentSection = ({ postId }) => {
 
     if (provider === "reddit") {
       fetchRedditComments();
-    } else {
+    } else if (provider === "firebase") {
       const commentsQuery = query(
         collection(db, "comments"),
         where("postId", "==", postId)
@@ -201,7 +201,6 @@ const CommentSection = ({ postId }) => {
         const data = await response.json();
         if (data?.json?.errors?.length) throw new Error(data.json.errors[0][1]);
 
-        alert("✅ Comment posted to Reddit!");
         setNewComment("");
         fetchRedditComments();
       } catch (err) {
@@ -231,16 +230,13 @@ const CommentSection = ({ postId }) => {
   };
 
   const formatTimestamp = (timestamp) => {
-    if (!timestamp) return "";
-    const date = timestamp.toDate();
-    return date.toLocaleString();
+    if (!timestamp?.toDate) return "";
+    return timestamp.toDate().toLocaleString();
   };
-
-  const isFirebase = provider === "firebase";
 
   return (
     <Wrapper>
-      {(provider === "reddit" || isFirebase) && (
+      {(provider === "reddit" || provider === "firebase") && (
         <CommentForm onSubmit={handleSubmit}>
           <Textarea
             placeholder="Write your comment..."
@@ -279,7 +275,7 @@ const CommentSection = ({ postId }) => {
               <CommentTime>
                 {comment.timestamp ? formatTimestamp(comment.timestamp) : ""}
               </CommentTime>
-              {isFirebase && <LikeButton itemId={comment.id} itemType="comments" />}
+              {provider === "firebase" && <LikeButton itemId={comment.id} itemType="comments" />}
             </SingleComment>
           ))}
         </AnimatePresence>
