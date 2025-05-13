@@ -3,6 +3,7 @@ import LikeButton from '../../components/userItems/LikeButton.js';
 import styled from 'styled-components';
 
 const Card = styled.div`
+  display: block;
   background: #1a1a1b;
   border: 1px solid #343536;
   padding: 1.25rem;
@@ -16,12 +17,12 @@ const Card = styled.div`
   }
 
   @media (max-width: 768px) {
-    padding: 1rem;
+    padding: 8rem;
     font-size: 0.95rem;
   }
 
   @media (max-width: 480px) {
-    padding: 0.85rem;
+    padding: 0.7rem;
     font-size: 0.9rem;
   }
 `;
