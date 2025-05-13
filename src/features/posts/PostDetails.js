@@ -62,24 +62,9 @@ const CommentsSection = styled.div`
   margin-top: 2rem;
 `;
 
-const Comment = styled.div`
-  border-left: 2px solid #ff4500;
-  padding-left: 1rem;
-  margin-bottom: 1.2rem;
-
-  p {
-    margin: 0.25rem 0;
-  }
-
-  strong {
-    color: #ffb000;
-  }
-`;
-
 const PostDetails = () => {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
-  const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -87,17 +72,13 @@ const PostDetails = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   useEffect(() => {
-    const fetchPostAndComments = async () => {
+    const fetchPost = async () => {
       setLoading(true);
       try {
         const res = await fetch(`https://www.reddit.com/comments/${postId}.json`);
         const json = await res.json();
-
         const postData = json[0].data.children[0].data;
-        const commentData = json[1].data.children.map((c) => c.data);
-
         setPost(postData);
-        setComments(commentData);
         setError(null);
       } catch (err) {
         console.error("Failed to load post details", err);
@@ -107,7 +88,7 @@ const PostDetails = () => {
       }
     };
 
-    fetchPostAndComments();
+    fetchPost();
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [postId]);
 
@@ -132,24 +113,13 @@ const PostDetails = () => {
       <BackLink to="/">← Back to Posts</BackLink>
 
       <CommentsSection>
-        <h3>Comments</h3>
-
-        {comments.length === 0 ? (
-          <p>No comments yet.</p>
-        ) : (
-          comments.map((comment) => (
-            <Comment key={comment.id}>
-              <p><strong>u/{comment.author}</strong></p>
-              <p>{comment.body}</p>
-            </Comment>
-          ))
-        )}
+        <h3>Your Comment</h3>
 
         {isAuthenticated && (
           <>
             {provider === "firebase" && (
               <>
-                <CommentSection postId={post.name} />
+                <CommentSection postId={post.name} showOnlyCurrentUser={true} />
                 <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
                   💬 Comments are stored via Firebase.
                 </p>
@@ -157,7 +127,7 @@ const PostDetails = () => {
             )}
             {provider === "reddit" && (
               <>
-                <CommentSection postId={post.id} />
+                <CommentSection postId={post.id} showOnlyCurrentUser={true} />
                 <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
                   📝 Comment will be submitted to Reddit.
                 </p>
