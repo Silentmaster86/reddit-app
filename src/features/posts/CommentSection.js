@@ -113,7 +113,10 @@ const CommentSection = ({ postId }) => {
       const res = await fetch(`https://www.reddit.com/comments/${postId}.json`);
       const json = await res.json();
       const redditComments = json[1].data.children.map((c) => c.data);
-      setComments(redditComments);
+      const myComments = redditComments.filter(
+        (c) => c.author === redditUser?.name
+      );
+      setComments(myComments);
     } catch (err) {
       console.error("Reddit comment fetch failed", err);
     }
@@ -127,7 +130,8 @@ const CommentSection = ({ postId }) => {
     } else {
       const commentsQuery = query(
         collection(db, "comments"),
-        where("postId", "==", postId)
+        where("postId", "==", postId),
+        where("authorId", "==", user?.uid)
       );
 
       const unsubscribe = onSnapshot(commentsQuery, async (snapshot) => {
@@ -144,7 +148,7 @@ const CommentSection = ({ postId }) => {
 
       return () => unsubscribe();
     }
-  }, [postId, provider]);
+  }, [postId, provider, user?.uid, redditUser?.name]);
 
   const handleDelete = async (commentId) => {
     if (provider === "firebase") {
@@ -186,7 +190,7 @@ const CommentSection = ({ postId }) => {
 
         alert("✅ Comment posted to Reddit!");
         setNewComment("");
-        fetchRedditComments(); // Refresh to show the comment
+        fetchRedditComments();
       } catch (err) {
         console.error("❌ Reddit comment failed:", err);
         alert("Failed to post comment on Reddit.");
