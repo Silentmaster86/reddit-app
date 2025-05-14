@@ -112,36 +112,35 @@ const PostDetails = () => {
 
       <BackLink to="/">← Back to Posts</BackLink>
 
-      <CommentsSection>
-        <h3>Your Comment</h3>
+<CommentsSection>
+  <h3>Comments</h3>
 
-        {isAuthenticated && (
-          <>
-            {provider === "firebase" && (
-              <>
-                <CommentSection postId={post.name} showOnlyCurrentUser={true} />
-                <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
-                  💬 Comments are stored via Firebase.
-                </p>
-              </>
-            )}
-            {provider === "reddit" && (
-              <>
-                <CommentSection postId={post.id} showOnlyCurrentUser={true} />
-                <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
-                  📝 Comment will be submitted to Reddit.
-                </p>
-              </>
-            )}
-          </>
-        )}
+  {comments.length === 0 ? (
+    <p>No comments yet.</p>
+  ) : (
+    comments.map((comment) => (
+      <Comment key={comment.id}>
+        <p><strong>u/{comment.author}</strong></p>
+        <p>{comment.body}</p>
+      </Comment>
+    ))
+  )}
 
-        {!isAuthenticated && (
-          <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
-            🔒 Sign in to post a comment.
-          </p>
-        )}
-      </CommentsSection>
+  {isAuthenticated ? (
+    <>
+      <CommentSection postId={provider === "firebase" ? post.name : post.id} />
+      <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
+        {provider === "firebase"
+          ? "💬 Your Firebase comment"
+          : "📝 Your Reddit comment"}
+      </p>
+    </>
+  ) : (
+    <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
+      🔒 Sign in to leave a comment.
+    </p>
+  )}
+</CommentsSection>
     </Wrapper>
   );
 };
