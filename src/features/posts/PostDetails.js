@@ -115,30 +115,22 @@ const PostDetails = () => {
 <CommentsSection>
   <h3>Comments</h3>
 
-  {comments.length === 0 ? (
-    <p>No comments yet.</p>
-  ) : (
-    comments.map((comment) => (
-      <Comment key={comment.id}>
-        <p><strong>u/{comment.author}</strong></p>
-        <p>{comment.body}</p>
-      </Comment>
-    ))
-  )}
-
-  {isAuthenticated ? (
+  {isAuthenticated && (
     <>
-      <CommentSection postId={provider === "firebase" ? post.name : post.id} />
+      <CommentSection postId={post.name || post.id} />
       <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
-        {provider === "firebase"
-          ? "💬 Your Firebase comment"
-          : "📝 Your Reddit comment"}
+        📝 Comments are enabled.
       </p>
     </>
-  ) : (
-    <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
-      🔒 Sign in to leave a comment.
-    </p>
+  )}
+
+  {!isAuthenticated && (
+    <>
+      <CommentSection postId={post.name || post.id} />
+      <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
+        🔒 Sign in to post a comment.
+      </p>
+    </>
   )}
 </CommentsSection>
     </Wrapper>
