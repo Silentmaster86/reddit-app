@@ -113,6 +113,7 @@ const CommentSection = ({ postId }) => {
       const res = await fetch(`https://www.reddit.com/comments/${postId}.json`);
       const json = await res.json();
       const redditComments = json[1].data.children.map((c) => c.data);
+      console.log("Mapped Reddit Comments:", redditComments);
       setComments(redditComments);
     } catch (err) {
       console.error("Reddit comment fetch failed", err);
