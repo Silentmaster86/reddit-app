@@ -116,7 +116,7 @@ const PostDetails = () => {
       <CommentsSection>
         <h3>Comments</h3>
 
-        <CommentSection postId={provider === "firebase" ? post.name : post.id} />
+        <CommentSection postId={post.id} />
 
         {isAuthenticated ? (
           <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
