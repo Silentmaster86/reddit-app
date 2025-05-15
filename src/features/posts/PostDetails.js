@@ -114,15 +114,14 @@ const PostDetails = () => {
       <CommentsSection>
         <h3>Comments</h3>
 
+        <CommentSection postId={provider === "firebase" ? post.name : post.id} />
+
         {isAuthenticated ? (
-          <>
-            <CommentSection postId={provider === "firebase" ? post.name : post.id} />
-            <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
-              {provider === "firebase"
-                ? "💬 Your Firebase comment"
-                : "📝 Your Reddit comment"}
-            </p>
-          </>
+          <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
+            {provider === "firebase"
+              ? "💬 Your Firebase comment"
+              : "📝 Your Reddit comment"}
+          </p>
         ) : (
           <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
             🔒 Sign in to leave a comment.
