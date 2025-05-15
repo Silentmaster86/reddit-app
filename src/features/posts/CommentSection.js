@@ -113,10 +113,7 @@ const CommentSection = ({ postId }) => {
       const res = await fetch(`https://www.reddit.com/comments/${postId}.json`);
       const json = await res.json();
       const redditComments = json[1].data.children.map((c) => c.data);
-      const myComments = redditComments.filter(
-        (c) => c.author === redditUser?.name
-      );
-      setComments(myComments);
+      setComments(redditComments);
     } catch (err) {
       console.error("Reddit comment fetch failed", err);
     }
@@ -127,11 +124,10 @@ const CommentSection = ({ postId }) => {
 
     if (provider === "reddit") {
       fetchRedditComments();
-    } else {
+    } else if (provider === "firebase") {
       const commentsQuery = query(
         collection(db, "comments"),
-        where("postId", "==", postId),
-        where("authorId", "==", user?.uid)
+        where("postId", "==", postId)
       );
 
       const unsubscribe = onSnapshot(commentsQuery, async (snapshot) => {
@@ -148,7 +144,7 @@ const CommentSection = ({ postId }) => {
 
       return () => unsubscribe();
     }
-  }, [postId, provider, user?.uid, redditUser?.name]);
+  }, [postId, provider]);
 
   const handleDelete = async (commentId) => {
     if (provider === "firebase") {
@@ -225,17 +221,15 @@ const CommentSection = ({ postId }) => {
 
   return (
     <Wrapper>
-      {(provider === "reddit" || provider === "firebase") && (
-        <CommentForm onSubmit={handleSubmit}>
-          <Textarea
-            placeholder="Write your comment..."
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            required
-          />
-          <SubmitButton type="submit">Post Comment</SubmitButton>
-        </CommentForm>
-      )}
+      <CommentForm onSubmit={handleSubmit}>
+        <Textarea
+          placeholder="Write your comment..."
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          required
+        />
+        <SubmitButton type="submit">Post Comment</SubmitButton>
+      </CommentForm>
 
       <CommentList>
         <AnimatePresence>
