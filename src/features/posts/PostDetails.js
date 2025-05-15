@@ -107,6 +107,8 @@ const PostDetails = () => {
         />
       )}
 
+      <BackLink to="/">← Back to Posts</BackLink>
+            
       {post.selftext && <PostText>{post.selftext}</PostText>}
 
       <BackLink to="/">← Back to Posts</BackLink>
