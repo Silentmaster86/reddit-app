@@ -122,7 +122,7 @@ const CommentSection = ({ postId }) => {
   useEffect(() => {
     if (!postId) return;
 
-    if (provider === "reddit") {
+    if (!provider || provider === "reddit") {
       fetchRedditComments();
     } else if (provider === "firebase") {
       const commentsQuery = query(
