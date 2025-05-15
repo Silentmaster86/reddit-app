@@ -67,7 +67,6 @@ const PostDetails = () => {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const provider = useSelector((state) => state.auth.provider);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
@@ -112,35 +111,24 @@ const PostDetails = () => {
 
       <BackLink to="/">← Back to Posts</BackLink>
 
-<CommentsSection>
-  <h3>Comments</h3>
+      <CommentsSection>
+        <h3>Comments</h3>
 
-  {comments.length === 0 ? (
-    <p>No comments yet.</p>
-  ) : (
-    comments.map((comment) => (
-      <Comment key={comment.id}>
-        <p><strong>u/{comment.author}</strong></p>
-        <p>{comment.body}</p>
-      </Comment>
-    ))
-  )}
-
-  {isAuthenticated ? (
-    <>
-      <CommentSection postId={provider === "firebase" ? post.name : post.id} />
-      <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
-        {provider === "firebase"
-          ? "💬 Your Firebase comment"
-          : "📝 Your Reddit comment"}
-      </p>
-    </>
-  ) : (
-    <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
-      🔒 Sign in to leave a comment.
-    </p>
-  )}
-</CommentsSection>
+        {isAuthenticated ? (
+          <>
+            <CommentSection postId={provider === "firebase" ? post.name : post.id} />
+            <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
+              {provider === "firebase"
+                ? "💬 Your Firebase comment"
+                : "📝 Your Reddit comment"}
+            </p>
+          </>
+        ) : (
+          <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "1rem" }}>
+            🔒 Sign in to leave a comment.
+          </p>
+        )}
+      </CommentsSection>
     </Wrapper>
   );
 };
