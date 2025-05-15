@@ -24,7 +24,7 @@ const ContentArea = styled.div`
 const SidebarContainer = styled.div`
   width: 300px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     position: fixed;
     top: 0;
     left: ${({ open }) => (open ? "0" : "-250px")};
@@ -34,7 +34,7 @@ const SidebarContainer = styled.div`
     transition: left 0.3s ease;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: 1025px) {
     position: static;
   }
 `;
@@ -46,7 +46,7 @@ const Overlay = styled.div`
   background: rgba(0, 0, 0, 0.5);
   z-index: 1000;
 
-  @media (min-width: 769px) {
+  @media (min-width: 1025px) {
     display: none;
   }
 `;
