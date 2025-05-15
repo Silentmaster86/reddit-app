@@ -15,7 +15,7 @@ const SidebarContainer = styled.div`
 const SidebarHeader = styled.h2`
   font-size: 1.4rem;
   font-weight: bold;
-  color: #333;
+  color: ${({ theme }) => theme.body || "#E9E5E5"};
   margin-bottom: 1.5rem;
 `;
 
