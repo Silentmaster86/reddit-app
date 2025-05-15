@@ -15,17 +15,9 @@ const SidebarContainer = styled.div`
 const SidebarHeader = styled.h2`
   font-size: 1.4rem;
   font-weight: bold;
-  color: ${({ theme }) => theme.body || "#E9E5E5"};
+  color: #E9E5E5;
   margin-bottom: 1.5rem;
-`;
-
-const FooterSection = styled.div`
-  margin-top: 2rem;
-  border-top: 1px solid #ccc;
-  padding-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  text-align: center;
 `;
 
 const UserInfo = styled.div`
