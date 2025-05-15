@@ -259,7 +259,9 @@ const CommentSection = ({ postId }) => {
                     />
                   )}
                 </CommentAuthor>
-                <CommentContent>{comment.content}</CommentContent>
+                <CommentContent>
+                {comment.body || comment.content || "[No content]"}
+                </CommentContent>
                 <CommentTime>
                   {comment.timestamp ? formatTimestamp(comment.timestamp) : ""}
                 </CommentTime>
