@@ -259,7 +259,7 @@ const CommentSection = ({ postId }) => {
                     />
                   )}
                 </CommentAuthor>
-                <CommentContent>{comment.content || comment.body}</CommentContent>
+                <CommentContent>{comment.content}</CommentContent>
                 <CommentTime>
                   {comment.timestamp ? formatTimestamp(comment.timestamp) : ""}
                 </CommentTime>
