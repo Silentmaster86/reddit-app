@@ -27,7 +27,7 @@ const SidebarContainer = styled.div`
   @media (max-width: 1024px) {
     position: fixed;
     top: 0;
-    left: ${({ open }) => (open ? "0" : "-250px")};
+    left: ${({ open }) => (open ? "0" : "-300px")};
     height: 100vh;
     background: #1a1a1b;
     z-index: 1001;
@@ -68,7 +68,7 @@ const MainContent = styled.main`
 const BottomBar = styled.div`
   display: none;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     display: flex;
     position: fixed;
     bottom: 0;
