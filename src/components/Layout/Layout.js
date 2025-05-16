@@ -59,7 +59,7 @@ const MainContent = styled.main`
   color: ${({ theme }) => theme.text};
 
   @media (max-width: 768px) {
-    padding: 1rem;
+    padding: 0.01rem;
   }
 `;
 
