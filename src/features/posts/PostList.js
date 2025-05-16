@@ -48,7 +48,7 @@ const PaginationWrapper = styled.div`
 const PageButton = styled.button`
   padding: 0.5rem 0.9rem;
   font-size: 1rem;
-  background-color: ${({ active }) => (active ? "#005fcc" : "#007bff")};
+  background-color: ${({ active }) => (active ? "#FF0000" : "#007bff")};
   color: white;
   border: none;
   border-radius: 6px;
@@ -67,9 +67,9 @@ const PageButton = styled.button`
 
 const BackToTopButton = styled.button`
   position: fixed;
-  bottom: 40px;
-  right: 20px;
-  background-color: #007bff;
+  bottom: 10px;
+  right: 30px;
+  background-color: #ff4400;
   color: white;
   border: none;
   padding: 0.6rem 1rem;
@@ -78,7 +78,7 @@ const BackToTopButton = styled.button`
   z-index: 100;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #840000;
   }
 `;
 
