@@ -52,6 +52,10 @@ export default function PostList() {
   const postsPerPage = 10;
 
   useEffect(() => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}, [currentPage]);
+  
+  useEffect(() => {
     dispatch(fetchPosts());
   }, [dispatch, selectedSubreddit]);
 
