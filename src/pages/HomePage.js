@@ -1,8 +1,19 @@
 // src/pages/HomePage.js
-import React from "react";
-import styled from "styled-components";
-import { useSelector } from "react-redux";
-import PostList from "../features/posts/PostList.js";
+import React, { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import styled, { keyframes } from "styled-components";
+import { fetchPosts } from "../features/posts/postsSlice.js";
+import { Link } from "react-router-dom";
+import Spinner from "../components/UI/Spinner.js";
+
+const fadeInHighlight = keyframes`
+  from {
+    background-color: #fffbdd;
+  }
+  to {
+    background-color: transparent;
+  }
+`;
 
 const Wrapper = styled.div`
   padding: 2rem;
@@ -13,11 +24,67 @@ const Wrapper = styled.div`
   }
 `;
 
+const AnimatedListWrapper = styled.div`
+  animation: ${fadeInHighlight} 1.5s ease;
+`;
+
+const PostCard = styled.div`
+  display: flex;
+  background: #1a1a1b;
+  border: 1px solid #343536;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  transition: background 0.2s;
+
+  &:hover {
+    background: #2a2a2b;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.7rem;
+    font-size: 0.9rem;
+  }
+`;
+
+
+const Title = styled.h3`
+  font-size: 1.2rem;
+  color: #fff;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+`;
+
+const Meta = styled.p`
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-bottom: 0.5rem;
+`;
+
 const HomePage = () => {
+  const dispatch = useDispatch();
+  const { posts, status } = useSelector((state) => state.posts);
+  const selectedSubreddit = useSelector((state) => state.posts.selectedSubreddit);
   const { isAuthenticated, provider, user } = useSelector((state) => state.auth);
+  const topRef = useRef(null);
+
+  useEffect(() => {
+    dispatch(fetchPosts(selectedSubreddit));
+    setTimeout(() => {
+      const offsetTop = topRef.current?.offsetTop || 0;
+      window.scrollTo({ top: offsetTop - 30, behavior: "auto" });
+    }, 0);
+  }, [dispatch, selectedSubreddit]);
 
   return (
-    <Wrapper>
+    <Wrapper ref={topRef}>
       {!isAuthenticated && (
         <>
           <h1>Welcome to Reddit Clone! 🎉</h1>
@@ -39,7 +106,21 @@ const HomePage = () => {
         </>
       )}
 
-      <PostList />
+      {status === "loading" && <Spinner />}
+
+      {status === "succeeded" && posts.length > 0 && (
+        <AnimatedListWrapper>
+          {currentPosts.map((post)=> (
+            <PostCard key={post.id}>
+              <Title>{post.title}</Title>
+              <Meta>by u/{post.author || "anonymous"}</Meta>
+              <Link to={`/post/${post.id}`}>Read more</Link>
+            </PostCard>
+          ))}
+        </AnimatedListWrapper>
+      )}
+
+      {status === "failed" && <p>Failed to load posts. Please try again.</p>}
     </Wrapper>
   );
 };
