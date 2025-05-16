@@ -146,7 +146,7 @@ const SubredditList = ({ onItemClick }) => {
 
   const handleClick = (sub) => {
     dispatch(setSelectedSubreddit(sub.display_name));
-    dispatch(fetchPosts(sub.display_name))); 
+    dispatch(fetchPosts(sub.display_name)); 
     if (onItemClick) onItemClick(); // ✅ closes sidebar on mobile
   };
 
