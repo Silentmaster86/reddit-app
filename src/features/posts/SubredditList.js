@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedSubreddit, setSubreddits } from "./postsSlice.js";
+import { setSelectedSubreddit, setSubreddits, fetchPosts } from "./postsSlice.js";
 import axios from "axios";
 import styled from "styled-components";
 import Spinner from "../../components/UI/Spinner.js";
@@ -146,6 +146,7 @@ const SubredditList = ({ onItemClick }) => {
 
   const handleClick = (sub) => {
     dispatch(setSelectedSubreddit(sub.display_name));
+    dispatch(fetchPosts()); 
     if (onItemClick) onItemClick(); // ✅ closes sidebar on mobile
   };
 
