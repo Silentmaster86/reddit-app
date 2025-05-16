@@ -54,7 +54,6 @@ const Overlay = styled.div`
 const MainContent = styled.main`
   flex: 1;
   padding: 1rem;
-  max-width: fit-content;
   overflow-x: hidden;
   background-color: ${({ theme }) => theme.body};
   color: ${({ theme }) => theme.text};
