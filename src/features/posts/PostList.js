@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   min-height: 100vh;
 
   @media (max-width: 768px) {
-    padding: 1rem;
+    padding: 0.01rem;
   }
 `;
 
@@ -25,7 +25,7 @@ const StyledList = styled(motion.ul)`
   margin: 0;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
+  gap: 2.5rem;
 `;
 
 const StyledLink = styled(Link)`
