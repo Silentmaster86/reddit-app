@@ -67,7 +67,7 @@ const PageButton = styled.button`
 
 const BackToTopButton = styled.button`
   position: fixed;
-  bottom: 10px;
+  bottom: 70px;
   right: 30px;
   background-color: #ff4400;
   color: white;
@@ -80,6 +80,11 @@ const BackToTopButton = styled.button`
   &:hover {
     background-color: #840000;
   }
+
+  @media (max-width: 1024px) {
+   
+   }
+  
 `;
 
 export default function PostList() {
@@ -205,7 +210,7 @@ export default function PostList() {
 
       {currentPage > 1 && (
         <BackToTopButton onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-          ↑ Back to Top
+          ↑ Top ↑
         </BackToTopButton>
       )}
     </Wrapper>
