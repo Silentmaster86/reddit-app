@@ -1,5 +1,5 @@
 import React from 'react';
-import LikeButton from '../../components/UI/LikeButton.js';
+import LikeButton from '../../../components/UI/LikeButton.js';
 import styled from 'styled-components';
 
 const Card = styled.div`
