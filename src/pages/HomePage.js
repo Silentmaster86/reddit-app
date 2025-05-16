@@ -29,7 +29,7 @@ const AnimatedListWrapper = styled.div`
 `;
 
 const PostCard = styled.div`
-  display: flex
+  display: flex;
   background: #1a1a1b;
   border: 1px solid #343536;
   padding: 1rem;
@@ -79,7 +79,7 @@ const HomePage = () => {
     dispatch(fetchPosts(selectedSubreddit));
     setTimeout(() => {
       const offsetTop = topRef.current?.offsetTop || 0;
-      window.scrollTo({ top: offsetTop - 50, behavior: "auto" });
+      window.scrollTo({ top: offsetTop - 30, behavior: "auto" });
     }, 0);
   }, [dispatch, selectedSubreddit]);
 
@@ -110,10 +110,10 @@ const HomePage = () => {
 
       {status === "succeeded" && posts.length > 0 && (
         <AnimatedListWrapper>
-          {posts.slice(0, 10).map((post) => (
+          {currentPosts.map((post)=> (
             <PostCard key={post.id}>
               <Title>{post.title}</Title>
-              <Meta>by u/{post.author}</Meta>
+              <Meta>by u/{post.author || "anonymous"}</Meta>
               <Link to={`/post/${post.id}`}>Read more</Link>
             </PostCard>
           ))}
