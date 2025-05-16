@@ -3,6 +3,15 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import PostList from "../features/posts/PostList.js";
 
+const Wrapper = styled.div`
+  padding: 2rem;
+  color: ${({ theme }) => theme.text};
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+`;
+
 const HomePage = () => {
   const { isAuthenticated, provider, user } = useSelector((state) => state.auth);
 
