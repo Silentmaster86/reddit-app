@@ -67,7 +67,7 @@ const PageButton = styled.button`
 
 const BackToTopButton = styled.button`
   position: fixed;
-  bottom: 70px;
+  bottom: 10px;
   right: 30px;
   background-color: #ff4400;
   color: white;
@@ -82,7 +82,7 @@ const BackToTopButton = styled.button`
   }
 
   @media (max-width: 1024px) {
-   
+    bottom: 70px;
    }
   
 `;
