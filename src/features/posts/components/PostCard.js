@@ -18,7 +18,7 @@ const Card = styled.div`
   }
 
   @media (max-width: 768px) {
-    padding: 8rem;
+    padding: 1rem;
     font-size: 0.8rem;
   }
 
