@@ -107,7 +107,7 @@ export default function PostList() {
 }, [currentPage]);
   
   useEffect(() => {
-    dispatch(fetchPosts());
+    dispatch(fetchPosts(selectedSubreddit));
   }, [dispatch, selectedSubreddit]);
 
   useEffect(() => {
