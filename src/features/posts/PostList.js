@@ -103,7 +103,7 @@ export default function PostList() {
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
-          paginate={setCurrentPage}
+          onPageChange={setCurrentPage}
         />
       )}
     </Wrapper>
