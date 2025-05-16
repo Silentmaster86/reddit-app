@@ -11,7 +11,7 @@ import styled from "styled-components";
 // Styled wrapper for scoped styling
 const Wrapper = styled.div`
   padding: 2rem;
-  background-color: #f6f7f8;
+  background-color: ${({ theme }) => theme.body || "#1a1a1b"};
   min-height: 100vh;
 
   @media (max-width: 768px) {
