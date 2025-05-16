@@ -2,26 +2,25 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const fetchPosts = createAsyncThunk(
-  "posts/fetchPosts",
-  async (_, { getState }) => {
-    const { selectedSubreddit } = getState().posts;
-    const subreddit = selectedSubreddit || "popular";
-
-    const response = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
-    const json = await response.json();
-
-    return json.data.children.map(({ data }) => ({
-      id: data.id,
-      title: data.title,
-      author: data.author,
-      subreddit: data.subreddit,
-      permalink: data.permalink,
-      thumbnail: data.thumbnail,
-      url: data.url,
-      ups: data.ups,
-      num_comments: data.num_comments,
-      created_utc: data.created_utc
-    }));
+  'posts/fetchPosts',
+  async (subreddit, thunkAPI) => {
+    try {
+      const response = await axios.get(`https://www.reddit.com/r/${subreddit}.json`);
+      return response.data.data.children.map(({ data }) => ({
+        id: data.id,
+        title: data.title,
+        author: data.author,
+        subreddit: data.subreddit,
+        permalink: data.permalink,
+        thumbnail: data.thumbnail,
+        url: data.url,
+        ups: data.ups,
+        num_comments: data.num_comments,
+        created_utc: data.created_utc,
+      }));
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data || error.message);
+    }
   }
 );
 
