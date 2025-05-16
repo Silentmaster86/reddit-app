@@ -37,6 +37,51 @@ const StyledItem = styled(motion.li)`
   list-style: none;
 `;
 
+const PaginationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 2rem;
+`;
+
+const PageButton = styled.button`
+  padding: 0.5rem 0.9rem;
+  font-size: 1rem;
+  background-color: ${({ active }) => (active ? "#005fcc" : "#007bff")};
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
+
+  &:disabled {
+    background-color: #999;
+    cursor: not-allowed;
+  }
+`;
+
+const BackToTopButton = styled.button`
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 100;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
 export default function PostList() {
   const dispatch = useDispatch();
   const {
@@ -50,6 +95,7 @@ export default function PostList() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 10;
+  const pageRange = 2;
 
   useEffect(() => {
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -77,6 +123,42 @@ export default function PostList() {
   const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
   const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
+  
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    const startPage = Math.max(1, currentPage - pageRange);
+    const endPage = Math.min(totalPages, currentPage + pageRange);
+
+    if (startPage > 1) {
+      pageNumbers.push(1);
+      if (startPage > 2) pageNumbers.push("...");
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(i);
+    }
+
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) pageNumbers.push("...");
+      pageNumbers.push(totalPages);
+    }
+
+    return pageNumbers.map((number, i) =>
+      typeof number === "number" ? (
+        <PageButton
+          key={number}
+          active={number === currentPage}
+          onClick={() => setCurrentPage(number)}
+        >
+          {number}
+        </PageButton>
+      ) : (
+        <span key={`ellipsis-${i}`} style={{ padding: "0.5rem 0.8rem" }}>...</span>
+      )
+    );
+  };
+
+  
   return (
     <Wrapper>
       <h1>
@@ -104,11 +186,27 @@ export default function PostList() {
       </StyledList>
 
       {filteredPosts.length > postsPerPage && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-        />
+        <PaginationWrapper>
+          <PageButton
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            ◀
+          </PageButton>
+          {renderPageNumbers()}
+          <PageButton
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+          >
+            ▶
+          </PageButton>
+        </PaginationWrapper>
+      )}
+
+      {currentPage > 1 && (
+        <BackToTopButton onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+          ↑ Back to Top
+        </BackToTopButton>
       )}
     </Wrapper>
   );
