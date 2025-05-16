@@ -110,7 +110,7 @@ const HomePage = () => {
 
       {status === "succeeded" && posts.length > 0 && (
         <AnimatedListWrapper>
-          {currentPosts.map((post)=> (
+          {posts.map((post)=> (
             <PostCard key={post.id}>
               <Title>{post.title}</Title>
               <Meta>by u/{post.author || "anonymous"}</Meta>
