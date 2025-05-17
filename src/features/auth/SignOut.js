@@ -22,7 +22,7 @@ const SignOut = () => {
       }
 
       dispatch(logout()); // Reset Redux state
-      navigate("/signin"); // Redirect
+      navigate("/"); // Redirect
     } catch (error) {
       console.error("Error signing out:", error);
     }
